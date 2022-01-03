@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OSK_App.Entities.Payment>
+
+@{
+    ViewData["Title"] = "Wpłaty";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<p>
+    <a class="nav-link text-dark" asp-action="AcceptPayment">Przyjmij wpłatę</a>
+</p>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Usługa</th>
+        <th>@Html.DisplayNameFor(model => model.Cost)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentDate)</th>
+        <th>@Html.DisplayNameFor(model => model.PaymentTime)</th>
+        <th>Kursant</th>
+        <th>Pracowniki</th>
+        <th>Akcje</th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.ID)</td>
+        <td></td>
+        <td>@Html.DisplayFor(modelItem => item.Cost)</td>
+        <td>@Html.DisplayFor(modelItem => item.PaymentDate)</td>
+        <td>@Html.DisplayFor(modelItem => item.PaymentTime)</td>
+        <td>@Html.DisplayFor(modelItem => item.Student.UserID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Employee.UserID)</td>
+        <td>
+            <!--<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>-->
+        </td>
+    </tr>
+}
+</table>

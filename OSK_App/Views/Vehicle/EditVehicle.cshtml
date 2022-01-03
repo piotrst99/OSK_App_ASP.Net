@@ -1,0 +1,78 @@
+﻿@model OSK_App.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "EditVehicle";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<form asp-action="Edit">
+
+    <input asp-for="ID" hidden />
+
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px;">
+
+        <div class="col-sm-12 form-group">
+            <label asp-for="RegNumber" class="control-label"></label>
+            <input asp-for="RegNumber" class="form-control" />
+            <span asp-validation-for="RegNumber" class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+            <label asp-for="Mark" class="control-label"></label>
+            <input asp-for="Mark" class="form-control" />
+            <span asp-validation-for="Mark" class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+            <label asp-for="Model" class="control-label"></label>
+            <input asp-for="Model" class="form-control" />
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="col-sm-5 form-group">
+            <label asp-for="Course" class="control-label"></label>
+            <input asp-for="Course" class="form-control" />
+            <span asp-validation-for="Course" class="text-danger"></span>
+        </div>
+        <div class="col-sm-3 form-group">
+            <label asp-for="CategoryID" class="control-label"></label>
+            <select id="categoryID" asp-for="Category.ID" asp-items="@(new SelectList(ViewBag.categories, nameof(ViewBag.category.ID), nameof(ViewBag.category.Symbol)))" class="form-control"></select>
+            <span asp-validation-for="CategoryID" class="text-danger"></span>
+        </div>
+        <div class="col-sm-4 form-group">
+            <label asp-for="VehicleStatID" class="control-label"></label>
+            <select id="vehicleStatusID" asp-for="VehicleStatus.ID" asp-items="@(new SelectList(ViewBag.statutes, nameof(ViewBag.vehicleStatuses.ID), nameof(ViewBag.vehicleStatuses.Name)))" class="form-control"></select>
+            <span asp-validation-for="VehicleStatus.ID" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-left: 4px;">
+
+        <div class="col-sm-12 form-group">
+            <label class="control-label">Zmień zdjęcie</label>
+            <span class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div class="row">
+
+        <div class="col-sm-1 form-group">
+            <input type="submit" value="Zapisz" class="btn btn-primary" />
+        </div>
+
+        <div class="col-sm-1">
+            <a asp-controller="Vehicle" asp-action="RemoveVehicle" asp-route-id="@Model.ID" class="btn btn-dark">Usuń</a>
+        </div>
+
+        <div class="col-sm-2 form-group">
+            <a asp-action="GetVehicles" class="btn btn-danger">Wróć do listy</a>
+        </div>
+
+    </div>
+
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

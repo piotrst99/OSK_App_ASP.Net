@@ -1,0 +1,30 @@
+﻿@model OSK_App.Entities.Employee;
+
+@{
+    ViewData["Title"] = "Logowanie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="loginPanel" class="col-md-4">
+    <form asp-action="Login">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label>Login</label>
+            <input asp-for="User.UserName" class="form-control" />
+            <span asp-validation-for="User.UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Hasło</label>
+            <input type="password" asp-for="User.Password" class="form-control" />
+            <span asp-validation-for="User.Password" class="text-danger"></span>
+        </div>
+
+        <div>
+            <input type="submit" value="Zaloguj" class="btn btn-primary" />
+        </div>
+
+    </form>
+</div>

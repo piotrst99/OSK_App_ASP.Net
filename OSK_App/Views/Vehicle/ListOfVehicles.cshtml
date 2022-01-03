@@ -1,0 +1,43 @@
+﻿@model IEnumerable<OSK_App.Entities.Vehicle>
+
+@{
+    ViewData["Title"] = "Pojazdy";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="AddVehicle">Dodaj pojazd</a>
+</p>
+
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.RegNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.Mark)</th>
+        <th>@Html.DisplayNameFor(model => model.Model)</th>
+        <th>@Html.DisplayNameFor(model => model.Course)</th>
+        <th>@Html.DisplayNameFor(model => model.Category.Symbol)</th>
+        <th>@Html.DisplayNameFor(model => model.VehicleStatus.Name)</th>
+        <th>Akcje</th>
+    </tr>
+    @foreach (var item in Model) { 
+        <tr class="dane">
+            <td>@Html.DisplayFor(modelItem => item.RegNumber)</td>
+            <td>@Html.DisplayFor(modelItem => item.Mark)</td>
+            <td>@Html.DisplayFor(modelItem => item.Model)</td>
+            <td>@Html.DisplayFor(modelItem => item.Course)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category.Symbol)</td>
+            <td>@Html.DisplayFor(modelItem => item.VehicleStatus.Name)</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edytuj</a>
+                <a asp-action="Details" asp-route-id="@item.ID">Szczegóły</a>
+                <a asp-action="RemoveVehicle" asp-route-id="@item.ID">Usuń</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<style>
+    tr.dane:hover {
+        background-color: #4cff00;
+    }
+</style>

@@ -1,0 +1,275 @@
+﻿@model OSK_App.Models.StudentDetails
+
+@{
+    ViewData["Title"] = "Szczegóły kursanta";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<link href="~/StaticFiles/StudentDetails/studentDetails.css" rel="stylesheet" />
+
+<div>
+
+    <div class="row breadcrumb">
+        <div style="float: left; margin-right:auto;">
+            Dane osobowe i adresowe - @Model.FirstName @Model.Surname
+        </div>
+        <div style="float: right; margin-left: auto;">
+            <div class="" style="float:left;">@Html.ActionLink("Edytuj", "Edit", new { id = Model.ID }, new { @style = "text-decoration: none; color: white; display: inline-block; cursor:pointer;", @class = "btn btn-primary btn-sm" })</div>
+            <button id="showUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+            <button id="hiddenUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div id="userData" style="display: none;">
+
+        <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px; height: 400px;">
+            <input id="userID" type="hidden" asp-for="ID" />
+            <table class="table table-light" style="margin-bottom: 0rem;">
+                <tr>
+                    <th><label asp-for="FirstName" class="control-label"></label></th>
+                    <td>@Model.FirstName</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="SecondName" class="control-label"></label></th>
+                    <td>@Model.SecondName</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="Surname" class="control-label"></label></th>
+                    <td>@Model.Surname</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="PESEL" class="control-label"></label></th>
+                    <td>@Model.PESEL</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="UserName" class="control-label"></label></th>
+                    <td>@Model.UserName</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div class="row breadcrumb col-sm-6" style="float: left; margin-left: 4px; height: 400px; ">
+
+            <table class="table table-light" style="margin-bottom: 0rem;">
+                <tr>
+                    <th><label asp-for="Street" class="control-label"></label></th>
+                    <td>@Model.Street @Model.NrHome / @Model.NrLocal</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="Town" class="control-label"></label></th>
+                    <td>@Model.Town</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="PostCode" class="control-label"></label></th>
+                    <td>@Model.PostCode</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="Post" class="control-label"></label></th>
+                    <td>@Model.Post</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="PhoneNumber" class="control-label"></label></th>
+                    <td>@Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <th><label asp-for="Email" class="control-label"></label></th>
+                    <td>@Model.Email</td>
+                </tr>
+            </table>
+
+        </div>
+
+        <div style="clear: both;"></div>
+
+    </div>
+
+    <div class="row breadcrumb">
+        <div style="float: left; margin-right:auto;">
+            Kursy
+        </div>
+        <div style="float: right; margin-left: auto;">
+            <button id="addCourseBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Dodaj kurs</button>
+            <button id="showStudentCourseBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+            <button id="hiddenStudentCourseBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div class="row breadcrumb" id="studentCourses" style="display: none">
+        <div>
+            <table class="table table-light" style="margin-bottom: 0rem;">
+                <tr>
+                    <th>Nr</th>
+                    <th>Kategoria</th>
+                    <th>Data rozpoczęcia</th>
+                    <th>Data zakończenia</th>
+                    <th>Koszt kursu</th>
+                    <th>Suma wpłat</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                @for (int i = 1; i <= @Model.studentCourses.Count(); i++) {
+                    <tr class="courseData">
+                        <td>@i</td>
+                        <td>@Model.studentCourses[i - 1].Course.Category.Symbol</td>
+                        <td>@Model.studentCourses[i - 1].StartDate</td>
+                        <td>@Model.studentCourses[i - 1].EndDate</td>
+                        <td>@Model.studentCourses[i - 1].Course.CourseCost</td>
+                        <td>@Model.studentCourses[i - 1].SumOfPayment</td>
+                        <td>@Model.studentCourses[i - 1].StudentStatus</td>
+                        <td><button id="studentCourseDetailsBtn" type="button" class="btn btn-primary btn-sm">Szczegóły</button></td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <!-- ADD STUDENT COURSE MODAL -->
+    <div id="addStudentCourseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj kurs</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" style="float: left;">
+                    <label class="control-label">Kategoria</label>
+                    <select id="category" asp-items="@(new SelectList(ViewBag.categories, nameof(ViewBag.category.ID), nameof(ViewBag.category.Symbol)))" class="form-control"></select>
+                </div>
+                <div id="courseName" class="col-sm-5" style="float: left; display:block; margin-left: 15px;">
+                    <label class="control-label">Nazwa kursu</label>
+                    <select id="listCourses" class="form-control"></select>
+                </div>
+                <div style="clear: both;"></div>
+                <div id="errorCourseMsg" style="color: red;"></div>
+                <div class="col-sm-5 form-group" style="clear:both; margin-top;">
+                    <button id="addStudentCourseBtn" type="button" class="btn btn-success">Dodaj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SHOW STUDENT COURSE DETAILS MODAL -->
+
+    <div id="showStudentCourseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Szczegóły kursu</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div>Ilość zrealizowanych zajeć: @Model.practicals.Where(q=>q.PracticalStatID == 2).Count()</div>
+                <div id="practicalList" style="max-height: 500px; overflow: auto;">
+                    <table class="table table-light" style="margin-bottom: 0rem;">
+                        <tr>
+                            <th>Nr</th>
+                            <th>Data</th>
+                            <th>Godzina</th>
+                            <th>Instruktor</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        @for(int i=1; i<=Model.practicals.Count; i++){ 
+                            <tr>
+                                <td>@i</td>
+                                <td>@Model.practicals[i-1].Data</td>
+                                <td>@Model.practicals[i-1].StartTime</td>
+                                <td>@Model.practicals[i-1].Employee.User.FirstName @Model.practicals[i-1].Employee.User.Surname</td>
+                                <td>@Model.practicals[i-1].PracticalStatus.Name</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div>
+                    <button id="" type="button" class="btn btn-success">Usuń</button>
+                    <button id="" type="button" class="btn btn-success">Rezygnacja</button>
+                    <button id="" type="button" class="btn btn-success">Zakończ kurs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row breadcrumb">
+        <div style="float: left;">Wpłaty</div>
+        <button type="button" class="btn btn-primary btn-sm" id="acceptPayBtn" style="float: right; margin-left:auto;">Przyjmij wpłatę</button>
+        <button id="showPaymentDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; margin-left: 5px;">Pokaż</button>
+        <button id="hiddenPaymentDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; margin-left: 5px;">Ukryj</button>
+        <div style="clear: both;"></div>
+    </div>
+
+    <!-- ACCEPT PAYMENT MODAL -->
+
+    <div id="acceptPaymentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Przyjmij wpłatę</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-4 form-group" style="float: left;">
+                    <label asp-for="payment.TypePayment.Name" class="control-label"></label>
+                    <select id="typePayments" asp-for="payment.TypePaymentID" asp-items="@(new SelectList(ViewBag.typePayments, nameof(ViewBag.typePayments.ID), nameof(ViewBag.typePayments.Name)))" class="form-control"></select>
+                </div>
+                <div id="courseInfo" style="float: left; display:block;">
+                    <div id="course" class="form-group">
+                        <label asp-for="payment.Cost" class="control-label"></label>
+                        <input id="costCourse" asp-for="payment.Cost" class="form-control" />
+                    </div>
+                </div>
+                <div id="extraHour" style="float: left; display: none" class="">
+                    <div style="float: left;" class="col-sm-4 form-group">
+                        <label class="control-label">Ilość jazd</label>
+                        <input type="number" class="form-control" id="amountHours" min="1" />
+                    </div>
+                    <div style="float: left; margin-left: 5px;" class="form-group">
+                        <label class="control-label">Łączny koszt</label>
+                        <input type="text" class=" form-control" id="totalCost" disabled />
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+                <div id="errorCostMsg" style="color: red;"></div>
+                <div class="col-sm-4 form-group" style="clear:both;">
+                    <button id="addPaymentBtn" type="button" class="btn btn-success">Dodaj</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="studentPaymemts" style="display: none" class="row breadcrumb">
+        <div>Całkowita suma wpłat: @Model.payments.Sum(q => q.Cost) zł</div>
+        <table class="table table-light">
+            <tr>
+                <th>ID</th>
+                <th>Rodzaj usługi</th>
+                <th>Koszt</th>
+                <th>Data wpłaty</th>
+                <th>Godzina wpłaty</th>
+                <th>Pracownik</th>
+                <th>Akcje</th>
+            </tr>
+            @foreach (var item in Model.payments) {
+                <tr class="dane">
+                    <td>@item.ID</td>
+                    <td>@item.TypePayment.Name</td>
+                    <td>@item.Cost</td>
+                    <td>@item.PaymentDate</td>
+                    <td>@item.PaymentTime</td>
+                    <td>@item.Employee.User.FirstName @item.Employee.User.Surname</td>
+                    <td>
+                        @Html.ActionLink("Szczegóły", "", new { id = item.ID })
+                        @Html.ActionLink("Edytuj", "", new { id = item.ID })
+                        @Html.ActionLink("Usuń", "", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>
+
+<!--<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>-->
+<script src="~/StaticFiles/StudentDetails/studentDetails.js"></script>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<OSK_App.Entities.Employee>
+
+@{
+    ViewData["Title"] = "Pracownicy";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<p>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="AddEmployee">Dodaj pracownika</a>
+</p>
+
+<table class="table /*table-hover*/">
+    <tr>
+        <th>Pierwsze imię</th>
+        <th>Drugie imię</th>
+        <th>Nazwisko</th>
+        <th>Pesel</th>
+        <th>Nazwa użytkownika</th>
+        <th>Uprawnienie</th>
+        <th>Numer instruktora</th>
+        <th>Akcje</th>
+    </tr>
+    @foreach (var item in Model) {
+        <tr class="dane">
+            <td>@item.User.FirstName</td>
+            <td>@item.User.SecondName</td>
+            <td>@item.User.Surname</td>
+            <td>@item.User.PESEL</td>
+            <td>@item.User.UserName</td>
+            <td>@item.Role.Name</td>
+            <td>@item.NrInstructor</td>
+            <td>
+                @Html.ActionLink("Szczególy", "GetDetailsEmployee", new { id = item.UserID })
+                @Html.ActionLink("Edytuj", "Edit", new { id = item.UserID })
+                @Html.ActionLink("Usuń", "RemoveEmployee", new { id = item.UserID })
+            </td>
+        </tr>
+    }
+</table>
+
+<style>
+    tr.dane:hover {
+        background-color: #4cff00;
+    }
+</style>
+

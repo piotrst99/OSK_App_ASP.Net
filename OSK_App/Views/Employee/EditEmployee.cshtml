@@ -1,0 +1,129 @@
+﻿@model OSK_App.Entities.Employee
+
+@{
+    ViewData["Title"] = "Edytuj dane pracownika";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="UserID" />
+
+    <div class="row breadcrumb">
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.FirstName" class="control-label"></label>
+            <input asp-for="User.FirstName" class="form-control" />
+            <span asp-validation-for="User.FirstName" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.SecondName" class="control-label"></label>
+            <input asp-for="User.SecondName" class="form-control" />
+            <span asp-validation-for="User.SecondName" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.Surname" class="control-label"></label>
+            <input asp-for="User.Surname" class="form-control" />
+            <span asp-validation-for="User.Surname" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.PESEL" class="control-label"></label>
+            <input asp-for="User.PESEL" class="form-control" />
+            <span asp-validation-for="User.PESEL" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="RoleID" class="control-label"></label>
+            <select id="roleID" asp-for="RoleID" asp-items="@(new SelectList(ViewBag.roles, nameof(ViewBag.role.ID), nameof(ViewBag.role.Name)))" class="form-control"></select>
+            <span asp-validation-for="Role.ID" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="NrInstructor" class="control-label"></label>
+            <input id="nrInstructor" asp-for="NrInstructor" class="form-control" />
+            <span asp-validation-for="NrInstructor" class="text-danger"></span>
+        </div>
+
+    </div>
+
+
+
+    <div class="row breadcrumb">
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.Address.Street" class="control-label"></label>
+            <input asp-for="User.Address.Street" class="form-control" />
+            <span asp-validation-for="User.Address.Street" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-3 form-group">
+            <label asp-for="User.Address.NrHome" class="control-label"></label>
+            <input asp-for="User.Address.NrHome" class="form-control" />
+            <span asp-validation-for="User.Address.NrHome" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-3 form-group">
+            <label asp-for="User.Address.NrLocal" class="control-label"></label>
+            <input asp-for="User.Address.NrLocal" class="form-control" />
+            <span asp-validation-for="User.Address.NrLocal" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.Address.Town" class="control-label"></label>
+            <input asp-for="User.Address.Town" class="form-control" />
+            <span asp-validation-for="User.Address.Town" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-2 form-group">
+            <label asp-for="User.Address.PostCode" class="control-label"></label>
+            <input asp-for="User.Address.PostCode" class="form-control" />
+            <span asp-validation-for="User.Address.PostCode" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-4 form-group">
+            <label asp-for="User.Address.Post" class="control-label"></label>
+            <input asp-for="User.Address.Post" class="form-control" />
+            <span asp-validation-for="User.Address.Post" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.Address.PhoneNumber" class="control-label"></label>
+            <input asp-for="User.Address.PhoneNumber" class="form-control" />
+            <span asp-validation-for="User.Address.PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="col-sm-6 form-group">
+            <label asp-for="User.Address.Email" class="control-label"></label>
+            <input asp-for="User.Address.Email" class="form-control" />
+            <span asp-validation-for="User.Address.Email" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-1 form-group">
+            <input type="submit" value="Zapisz" class="btn btn-primary" />
+        </div>
+
+        <div class="col-sm-1">
+            <a asp-controller="Employee" asp-action="RemoveEmployee" asp-route-id="@Model.UserID" class="btn btn-dark">Usuń</a>
+        </div>
+
+        <div class="col-sm-2 form-group">
+            <a asp-action="GetEmployees" class="btn btn-danger">Wróć do listy</a>
+        </div>
+
+    </div>
+
+</form>
+
+<script src="~/StaticFiles/CheckRole.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

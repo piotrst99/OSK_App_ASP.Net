@@ -1,0 +1,62 @@
+﻿@model OSK_App.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "Dodaj pojazd";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<form asp-action="AddVehicle">
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px;">
+        <div class="col-sm-12 form-group">
+            <label asp-for="RegNumber" class="control-label"></label>
+            <input asp-for="RegNumber" class="form-control" />
+            <span asp-validation-for="RegNumber" class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+            <label asp-for="Mark" class="control-label"></label>
+            <input asp-for="Mark" class="form-control" />
+            <span asp-validation-for="Mark" class="text-danger"></span>
+        </div>
+        <div class="col-sm-12 form-group">
+            <label asp-for="Model" class="control-label"></label>
+            <input asp-for="Model" class="form-control" />
+            <span asp-validation-for="Model" class="text-danger"></span>
+        </div>
+        <div class="col-sm-3 form-group">
+            <label class="control-label">Kategoria</label>
+            <select id="categoryID" asp-for="CategoryID" asp-items="@(new SelectList(ViewBag.categories, nameof(ViewBag.category.ID), nameof(ViewBag.category.Symbol)))" class="form-control"></select>
+            <span asp-validation-for="Category.ID" class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-left: 4px;">
+
+        <div class="col-sm-12 form-group">
+            <label class="control-label">Dodaj zdjęcie pojazdu</label>
+            <span class="text-danger"></span>
+        </div>
+
+    </div>
+
+    <div style="clear: both;"></div>
+
+    <div class="row">
+
+        <div class="col-sm-1 form-group">
+            <input type="submit" value="Dodaj" class="btn btn-primary" />
+        </div>
+
+        <div class="col-sm-2 form-group">
+            <a asp-action="GetVehicles" class="btn btn-danger">Wróć do listy</a>
+        </div>
+
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

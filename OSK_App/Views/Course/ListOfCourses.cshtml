@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OSK_App.Entities.Course>
+
+@{
+    ViewData["Title"] = "Lista kursów";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<p>
+    <a class="nav-link text-dark" asp-area="" asp-action="AddCourse">Dodaj kurs</a>
+</p>
+<table class="table">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.Name)</th>
+        <th>@Html.DisplayNameFor(model => model.Category.Symbol)</th>
+        <th>@Html.DisplayNameFor(model => model.AmountTheoretical)</th>
+        <th>@Html.DisplayNameFor(model => model.AmountPractical)</th>
+        <th>@Html.DisplayNameFor(model => model.CourseCost)</th>
+        <th>Il. kursantów</th>
+        <th></th>
+    </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+        <td>@Html.DisplayFor(modelItem => item.Category.Symbol)</td>
+        <td>@Html.DisplayFor(modelItem => item.AmountTheoretical)</td>
+        <td>@Html.DisplayFor(modelItem => item.AmountPractical)</td>
+        <td>@Html.DisplayFor(modelItem => item.CourseCost)</td>
+        <td>@Html.DisplayFor(modelItem => item.CountOfStudents)</td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+            <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        </td>
+    </tr>
+}
+</table>

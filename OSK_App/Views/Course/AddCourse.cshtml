@@ -1,0 +1,61 @@
+﻿@model OSK_App.Entities.Course
+
+@{
+    ViewData["Title"] = "Dodaj kurs";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<div>
+    <form asp-action="AddCourse">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row breadcrumb">
+            <div class="col-sm-6 form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label asp-for="AmountTheoretical" class="control-label"></label>
+                <input asp-for="AmountTheoretical" class="form-control" />
+                <span asp-validation-for="AmountTheoretical" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label asp-for="AmountPractical" class="control-label"></label>
+                <input asp-for="AmountPractical" class="form-control" />
+                <span asp-validation-for="AmountPractical" class="text-danger"></span>
+            </div>
+            <div class="col-sm-2 form-group">
+                <label asp-for="CategoryID" class="control-label"></label>
+                <select id="categoryID" asp-for="CategoryID" asp-items="@(new SelectList(ViewBag.categories, nameof(ViewBag.category.ID), nameof(ViewBag.category.Symbol)))" class="form-control"></select>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label asp-for="CourseCost" class="control-label"></label>
+                <input asp-for="CourseCost" class="form-control" />
+                <span asp-validation-for="CourseCost" class="text-danger"></span>
+            </div>
+            <div class="col-sm-3 form-group">
+                <label asp-for="ExtraPracticalCost" class="control-label"></label>
+                <input asp-for="ExtraPracticalCost" class="form-control" />
+                <span asp-validation-for="ExtraPracticalCost" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-1 form-group">
+                <input type="submit" value="Dodaj" class="btn btn-success" />
+            </div>
+
+            <div class="col-sm-2 form-group">
+                <a asp-action="GetCourses" class="btn btn-danger">Wróć do listy</a>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
