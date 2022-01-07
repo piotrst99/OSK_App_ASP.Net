@@ -20,18 +20,133 @@ namespace OSK_App.Controllers
             this.context = context;
         }
 
-        [HttpGet]
+        [HttpGet("/{surname}")]
         [Route("ListaKursantow")]
-        public IActionResult GetStudents() {
+        public IActionResult GetStudents(string surname) {
+        //public IActionResult GetStudents() {
             if (HttpContext.Session.GetInt32("_Id") != null) {
                 TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
                 
                 var students = context.students.ToList<Student>();
 
-                foreach (var s in students) {
+                /*foreach (var s in students) {
                     var user = context.users.Where(q => q.ID == s.UserID).FirstOrDefault();
+                }*/
+
+                if (surname == null) {
+                    foreach (var s in students) {
+                        var user = context.users.Where(q => q.ID == s.UserID).FirstOrDefault();
+                    }
+                    ViewBag.Surname = null;
+                }
+                else {
+                    var users = context.users.Where(q => q.Surname.Contains(surname)).ToList();
+
+                    foreach (var s in students) {
+
+                        for (int i = 0; i < users.Count; i++) {
+                            if (users[i].ID == s.UserID) {
+                                s.User = new User() {
+                                    ID = users[i].ID,
+                                    FirstName = users[i].FirstName,
+                                    SecondName = users[i].SecondName,
+                                    Surname = users[i].Surname,
+                                    PESEL = users[i].PESEL,
+                                    UserName = users[i].UserName
+                                };
+                                i = users.Count;
+                            }
+                            else {
+                                s.User = new User() {
+                                    FirstName = "test",
+                                    SecondName = "test",
+                                    Surname = "test",
+                                    PESEL = "test",
+                                    UserName = "test"
+                                };
+                            }
+                        }
+                        ViewBag.Surname = surname;
+                    }
+
+                    students = students.Where(q => q.User.FirstName != "test").ToList();
+
+                    /*foreach (var s in students) {
+                        var user = context.users.Where(q => q.ID == s.UserID && q.Surname.Contains(surname)).FirstOrDefault();
+                    }
+                    return Content(students.ToString());*/
+                    //return Json(new {r = students.ToString() });
+                    //return Json(new {r = students.Count().ToString() });
                 }
 
+                //return Content(Math.Ceiling((decimal)students.Count / 10).ToString());
+
+                return View("ListOfStudents", students);
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+        [HttpGet("/{surname}")]
+        //[HttpGet]
+        [Route("GetStudentsFromSearch")]
+        public IActionResult GetStudentsFromSearch(string surname) {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                var students = context.students.ToList<Student>();
+
+                //return Content("Nazwisko: "+surname);
+
+                var users = context.users.Where(q => q.Surname == surname).ToList();
+
+                try {
+                    foreach (var s in students) {
+                        //var user = context.users.Where(q => q.ID == s.UserID && q.Surname == surname).FirstOrDefault();
+
+                        for (int i = 0; i < users.Count; i++) {
+                            if(users[i].ID == s.UserID){
+                                s.User = new User() {
+                                    FirstName = users[i].FirstName,
+                                    SecondName = users[i].SecondName,
+                                    Surname = users[i].Surname,
+                                    PESEL = users[i].PESEL,
+                                    UserName = users[i].UserName
+                                };
+                            }
+                            else {
+                                s.User = new User() {
+                                    FirstName = "test",
+                                    SecondName = "test",
+                                    Surname = "test",
+                                    PESEL = "test",
+                                    UserName = "test"
+                                };
+                            }
+                        }
+
+                        /*foreach (var u in users) {
+                            if(s.UserID == u.ID){
+                                s.User = new User() {
+                                    FirstName = u.FirstName,
+                                    SecondName = u.SecondName,
+                                    Surname = u.Surname,
+                                    PESEL = u.PESEL,
+                                    UserName = u.UserName,
+                                };
+                            }
+                        }*/
+                        //return Content(s.User.ToString());
+                    }
+                }
+                catch (Exception) {
+
+                    throw;
+                }
+                students = students.Where(q => q.User.FirstName != "test").ToList();
+                //return Content(students.ToString());
+                //return RedirectToAction("GetStudents", "Home");
                 return View("ListOfStudents", students);
             }
             else {

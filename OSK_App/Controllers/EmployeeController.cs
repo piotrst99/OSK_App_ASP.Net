@@ -20,21 +20,65 @@ namespace OSK_App.Controllers
             this.context = context;
         }
 
-        [HttpGet]
+        [HttpGet("/{surname}")]
         [Route("ListaPracownikow")]
-        public IActionResult GetEmployees() {
+        public IActionResult GetEmployees(string surname) {
             if (HttpContext.Session.GetInt32("_Id") != null) {
                 TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
             
                 var employees = context.employees.ToList<Employee>();
 
-                foreach (var i in employees) {
-                    var user = context.users.Where(q => q.ID == i.UserID).FirstOrDefault();
+                if (surname == null) {
+                    foreach (var i in employees) {
+                        var user = context.users.Where(q => q.ID == i.UserID).FirstOrDefault();
+                    }
+
+                    foreach (var r in employees) {
+                        var role = context.roles.Where(q => q.ID == r.RoleID).FirstOrDefault();
+                    }
+                    ViewBag.Surname = null;
+                }
+                else {
+                    var users = context.users.Where(q => q.Surname.Contains(surname)).ToList();
+
+                    foreach (var s in employees) {
+
+                        for (int i = 0; i < users.Count; i++) {
+                            if (users[i].ID == s.UserID) {
+                                s.User = new User() {
+                                    ID = users[i].ID,
+                                    FirstName = users[i].FirstName,
+                                    SecondName = users[i].SecondName,
+                                    Surname = users[i].Surname,
+                                    PESEL = users[i].PESEL,
+                                    UserName = users[i].UserName
+                                };
+                                i = users.Count;
+                            }
+                            else {
+                                s.User = new User() {
+                                    FirstName = "test",
+                                    SecondName = "test",
+                                    Surname = "test",
+                                    PESEL = "test",
+                                    UserName = "test"
+                                };
+                            }
+                        }
+
+                        foreach (var r in employees) {
+                            var role = context.roles.Where(q => q.ID == r.RoleID).FirstOrDefault();
+                        }
+
+                    }
+                    
+                    ViewBag.Surname = surname;
+
+                    employees = employees.Where(q => q.User.FirstName != "test").ToList();
+
                 }
 
-                foreach (var r in employees) {
-                    var role = context.roles.Where(q => q.ID == r.RoleID).FirstOrDefault();
-                }
+                
 
                 return View("ListOfEmployees", employees);
             }

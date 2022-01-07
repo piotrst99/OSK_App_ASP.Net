@@ -156,34 +156,34 @@ function refreshPracticalDetails(val) {
     var beginDate = '', endDate = '';
 
     if (val == 2) {
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
-        endDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
+        endDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
     }
     else if (val == 3) {
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + (today.getDate() - 1);
-        endDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate() - 1);
+        endDate = today.getFullYear() + "-" + correctDateValue(today.getMonth()+1) + "-" + correctDateValue(today.getDate());
     }
     else if (val == 4) {
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + (today.getDate() - 7);
-        endDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate() - 7);
+        endDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
     }
     else if (val == 5) {
         var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7);
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
         endDate = nextWeek.getFullYear() + "-" + correctDateValue((nextWeek.getMonth()) + 1) + "-" + correctDateValue(nextWeek.getDate());
     }
     else if (val == 6) {
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1 - 1) + "-" + (today.getDate());
-        endDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1 - 1) + "-" + correctDateValue(today.getDate());
+        endDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
     }
     else if (val == 7) {
         var nextMonth = new Date(today.getFullYear(), today.getMonth()+1, today.getDate());
-        beginDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
         endDate = nextMonth.getFullYear() + "-" + correctDateValue((nextMonth.getMonth()) + 1) + "-" + correctDateValue(nextMonth.getDate());
     }
     else if (val == 8) {
-        beginDate = (today.getFullYear()-1) + "-" + ((today.getMonth()) + 1) + "-" + (today.getDate());
-        endDate = today.getFullYear() + "-" + ((today.getMonth()) + 1) + "-" + today.getDate();
+        beginDate = (today.getFullYear() - 1) + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
+        endDate = today.getFullYear() + "-" + correctDateValue((today.getMonth()) + 1) + "-" + correctDateValue(today.getDate());
     }
 
     $.ajax({
@@ -237,5 +237,10 @@ function refreshPracticalDetails(val) {
 
 
 function correctDateValue(val) {
-    return parseInt(val) < 10 ? '0' + parseInt(val) : parseInt(val);
+    if (val == 0) {
+        return '12'
+    }
+    else {
+        return parseInt(val) < 10 ? '0' + parseInt(val) : parseInt(val);
+    }
 }

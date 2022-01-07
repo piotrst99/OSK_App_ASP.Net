@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.Json.Serialization;
 
 namespace OSK_App
 {
@@ -35,6 +36,8 @@ namespace OSK_App
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseSqlServer(Configuration.GetConnectionString("OSK_Context"))
             );
+
+            //services.AddControllers().AddJsonOptions(x =>x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
         }
 

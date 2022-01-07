@@ -31,6 +31,11 @@ namespace OSK_App.Controllers
             }
         }
 
+        [Route("Oferta")]
+        public IActionResult OfferCourse() {
+            return View();
+        }
+
         [Route("Login")]
         public IActionResult Login() {
             if (HttpContext.Session.GetString("_Id") != null) {
@@ -40,7 +45,7 @@ namespace OSK_App.Controllers
                 return View();
             }
         }
-
+        
         [HttpPost]
         [Route("Login")]
         [ValidateAntiForgeryToken]
@@ -54,7 +59,8 @@ namespace OSK_App.Controllers
                 return RedirectToAction("MainPage" ,"Panel");
             }
             else {
-                return Content("Bad D:");
+                ViewBag.Error = "false";
+                return View(e);
             }
 
         }

@@ -19,6 +19,7 @@ var selectDate = new Date(today);
 window.onload = function(){    
     createDiv2(today);
     //createPracticalTableOfDay();
+    getPracticalToCancel();
 
     if (practicalStatus.value != 2) {
         document.getElementById('course').querySelector('input').disabled = true;

@@ -5,43 +5,110 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
-<p>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="AddStudent">Dodaj kursanta</a>
-</p>
+<link href="~/StaticFiles/Student/listOfStudentStyle.css" rel="stylesheet" />
+<link href="~/lib/jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet" />
+
+<style>
+    /*#studentNav { background-color: #f01d26; color: white;}*/
+</style>
+
+<div style="float:left; width:100%; background-color: #f01d26; color:white; font-weight:bold;">
+    <div style="float:left; padding:3px 0 0 5px;"><h4>KURSANT - LISTA KURSANTÓW</h4></div>
+    <div style="float: right;"><a class="nav-link text-light" asp-controller="Student" asp-action="AddStudent">+ Dodaj kursanta</a></div>
+</div>
+
+<div style="clear:both; padding:10px 10px 30px 10px;">
+
+    <div style="float:left;" id="paginesBtn">
+        <div style="float:left;">
+            <button id="previous" class="btn btn-sm btn-outline-primary" style="cursor:pointer; margin-right:5px;"><i class="icon-left-open"></i></button>
+            <button id="next" class="btn btn-sm btn-outline-primary" style="cursor: pointer; margin-left: 5px;"><i class="icon-right-open"></i></button>
+        </div>
+        <div style="float:left; margin-left:20px;" id="numberPage"></div>
+    </div>
+
+    <div>
+        <form asp-controller="Student" asp-action="GetStudents">
+            <a asp-controller="Student" asp-action="GetStudents" class="btn btn-sm btn-outline-warning" style="float: right; margin-left: 4px;"><i class="icon-arrows-cw"></i></a>
+            <button class="btn btn-sm btn-outline-primary" style="float:right; margin-left: 4px;" type="submit"><i class="icon-search"></i></button>
+            <input name="surname" value="@if(ViewBag.Surname!=null){ @ViewBag.Surname; }" placeholder="Wyszukaj po nazwisku" id="searchStudentTxt" style="float:right; width:250px;" type="text" />
+        </form>
+    </div>
+</div>
 
 <div id="tabelaKursanci">
 
-    <table class="table /*table-hover*/" id="tabelka">
-        <tr>
-            <th>Pierwsze imię</th>
-            <th>Drugie imię</th>
-            <th>Nazwisko</th>
-            <th>Pesel</th>
-            <th>Nazwa użytkownika</th>
-            <th>Akcje</th>
-        </tr>
-        @foreach (var item in Model) {
-            <tr class="dane">
-                <td>@item.User.FirstName</td>
-                <td>@item.User.SecondName</td>
-                <td>@item.User.Surname</td>
-                <td>@item.User.PESEL</td>
-                <td>@item.User.UserName</td>
-                <td>
-                    @Html.ActionLink("Szczegóły", "GetDetailsStudent", new { id = item.UserID })
-                    @Html.ActionLink("Edytuj", "Edit", new { id = item.UserID })
-                    @Html.ActionLink("Usuń", "RemoveStudent", new { id = item.UserID })
-                </td>
-            </tr>
+    @{
+        var countOfPages = Math.Ceiling((decimal)Model.Count() / 10);
+        int countOfUsers = Model.Count();
+
+        List<int> elementInPage = new List<int>();
+
+        for (int i = 0; i < countOfPages; i++) {
+            if (countOfUsers > 10) {
+                elementInPage.Add(10);
+                countOfUsers -= 10;
+            }
+            else { elementInPage.Add(countOfUsers); }
         }
-    </table>
+
+        for (int i = 0; i < countOfPages; i++) {
+
+            int startIndex = 0;
+
+            <table class="table table-light tablePage" id="page@(i+1)" hidden>
+                <tr class="trHeader">
+                    <th>Pierwsze imię</th>
+                    <th>Drugie imię</th>
+                    <th>Nazwisko</th>
+                    <th>Pesel</th>
+                    <th>Login</th>
+                    <th></th>
+                </tr>
+
+                @for (int j = startIndex; j < elementInPage[i]; j++) {
+                    startIndex += elementInPage[i];
+
+                    <tr class="dane">
+                        <td>@Model.ElementAt((i * 10) + j).User.FirstName</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.SecondName</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.Surname</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.PESEL</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.UserName</td>
+                        <td class="icons">
+                            <a class="nav-link text-dark icon" asp-controller="Student" asp-action="GetDetailsStudent" asp-route-id="@Model.ElementAt((i*10)+j).UserID">
+                                <i class="icon-doc"></i>
+                            </a>
+                            <a class="nav-link text-dark icon" asp-controller="Student" asp-action="Edit" asp-route-id="@Model.ElementAt((i*10)+j).UserID">
+                                <i class="icon-pencil"></i>
+                            </a>
+                            <a class="nav-link text-dark icon" asp-controller="Student" asp-action="RemoveStudent" asp-route-id="@Model.ElementAt((i*10)+j).UserID">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </table>
+        }
+
+    }
+
+
 
 </div>
 
-<style>
-    tr.dane:hover {
-        background-color: #4cff00;
-    }
-</style>
-
+@section Scripts{
+    <script src="~/lib/jquery-ui-1.13.0/jquery-ui.js"></script>
+    <script src="~/StaticFiles/General/userPaginate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchStudentTxt').autocomplete({
+                source: '/Search/SearchNames',
+                minLength: 3
+            });
+        });
+    </script>
+}
 

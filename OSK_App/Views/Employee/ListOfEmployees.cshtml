@@ -5,42 +5,110 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
-<p>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="AddEmployee">Dodaj pracownika</a>
-</p>
+<link href="~/StaticFiles/EmployeeDetails/listOfEmployeeStyle.css" rel="stylesheet" />
+<link href="~/lib/jquery-ui-1.13.0/jquery-ui.css" rel="stylesheet" />
 
-<table class="table /*table-hover*/">
-    <tr>
-        <th>Pierwsze imię</th>
-        <th>Drugie imię</th>
-        <th>Nazwisko</th>
-        <th>Pesel</th>
-        <th>Nazwa użytkownika</th>
-        <th>Uprawnienie</th>
-        <th>Numer instruktora</th>
-        <th>Akcje</th>
-    </tr>
-    @foreach (var item in Model) {
-        <tr class="dane">
-            <td>@item.User.FirstName</td>
-            <td>@item.User.SecondName</td>
-            <td>@item.User.Surname</td>
-            <td>@item.User.PESEL</td>
-            <td>@item.User.UserName</td>
-            <td>@item.Role.Name</td>
-            <td>@item.NrInstructor</td>
-            <td>
-                @Html.ActionLink("Szczególy", "GetDetailsEmployee", new { id = item.UserID })
-                @Html.ActionLink("Edytuj", "Edit", new { id = item.UserID })
-                @Html.ActionLink("Usuń", "RemoveEmployee", new { id = item.UserID })
-            </td>
-        </tr>
+<div style="float: left; width: 100%; background-color: #368c04; color: white; font-weight: bold;">
+    <div style="float:left; padding:3px 0 0 5px;"><h4>PRACOWNIK - LISTA PRACOWNIKÓW</h4></div>
+    <div style="float: right;"><a class="nav-link text-light" asp-controller="Employee" asp-action="AddEmployee">+ Dodaj pracownika</a></div>
+</div>
+
+<div style="clear:both; padding:10px 10px 30px 10px;">
+    <div style="float:left;" id="paginesBtn">
+        <div style="float:left;">
+            <button id="previous" class="btn btn-sm btn-outline-primary" style="cursor:pointer; margin-right:5px;"><i class="icon-left-open"></i></button>
+            <button id="next" class="btn btn-sm btn-outline-primary" style="cursor: pointer; margin-left: 5px;"><i class="icon-right-open"></i></button>
+        </div>
+        <div style="float:left; margin-left:20px;" id="numberPage"></div>
+    </div>
+
+    <div>
+        <form asp-controller="Student" asp-action="GetEmployees">
+            <a asp-controller="Student" asp-action="GetEmployees" class="btn btn-sm btn-outline-warning" style="float: right; margin-left: 4px;"><i class="icon-arrows-cw"></i></a>
+            <button class="btn btn-sm btn-outline-primary" style="float:right; margin-left: 4px;" type="submit"><i class="icon-search"></i></button>
+            <input name="surname" value="@if(ViewBag.Surname!=null){ @ViewBag.Surname; }" placeholder="Wyszukaj po nazwisku" id="searchStudentTxt" style="float:right; width:250px;" type="text" />
+        </form>
+    </div>
+</div>
+
+<div>
+
+    @{
+        var countOfPages = Math.Ceiling((decimal)Model.Count() / 10);
+        int countOfUsers = Model.Count();
+
+        List<int> elementInPage = new List<int>();
+
+        for (int i = 0; i < countOfPages; i++) {
+            if (countOfUsers > 10) {
+                elementInPage.Add(10);
+                countOfUsers -= -10;
+            }
+            else { elementInPage.Add(countOfUsers); }
+        }
+
+        for (int i = 0; i < countOfPages; i++) {
+            int startIndex = 0;
+
+            <table class="table table-light tablePage" id="page@(i+1)" hidden>
+                <tr class="trHeader">
+                    <th>Pierwsze imię</th>
+                    <th>Drugie imię</th>
+                    <th>Nazwisko</th>
+                    <th>Pesel</th>
+                    <th>Nazwa użytkownika</th>
+                    <th>Uprawnienie</th>
+                    <th>Numer instruktora</th>
+                    <th></th>
+                </tr>
+
+                @for (int j = startIndex; j < elementInPage[i]; j++) {
+                    startIndex += elementInPage[i];
+
+
+                    <tr class="dane">
+                        <td>@Model.ElementAt((i * 10) + j).User.FirstName</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.SecondName</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.Surname</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.PESEL</td>
+                        <td>@Model.ElementAt((i * 10) + j).User.UserName</td>
+                        <td>@Model.ElementAt((i * 10) + j).Role.Name</td>
+                        <td>@Model.ElementAt((i * 10) + j).NrInstructor</td>
+                        <td class="icons">
+                            <a class="nav-link text-dark icon" asp-area="" asp-controller="Employee" asp-action="GetDetailsEmployee" asp-route-id="@Model.ElementAt((i * 10) + j).UserID">
+                                <i class="icon-doc"></i>
+                            </a>
+                            <a class="nav-link text-dark icon" asp-area="" asp-controller="Employee" asp-action="Edit" asp-route-id="@Model.ElementAt((i * 10) + j).UserID">
+                                <i class="icon-pencil"></i>
+                            </a>
+                            <a class="nav-link text-dark icon" asp-area="" asp-controller="Employee" asp-action="RemoveEmployee" asp-route-id="@Model.ElementAt((i * 10) + j).UserID">
+                                <i class="icon-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </table>
+
+        }
+
     }
-</table>
 
-<style>
-    tr.dane:hover {
-        background-color: #4cff00;
-    }
-</style>
+</div>
 
+
+
+
+@section Scripts{
+    <script src="~/lib/jquery-ui-1.13.0/jquery-ui.js"></script>
+    <script src="~/StaticFiles/General/userPaginate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchStudentTxt').autocomplete({
+                source: '/Search/SearchNames',
+                minLength: 3
+            });
+        });
+    </script>
+}

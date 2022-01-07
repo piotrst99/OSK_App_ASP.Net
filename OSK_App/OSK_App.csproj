@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\" />
     <Folder Include="Source\" />
+    <Folder Include="wwwroot\Fontello\" />
     <Folder Include="wwwroot\Scripts\" />
   </ItemGroup>
 

@@ -102,3 +102,11 @@
 .itemTable:hover{
     background-color: #508890;
 }
+
+.buttons {
+    text-align:center;
+}
+
+#cancelPracticalTable {
+    margin-bottom: 0rem;
+}

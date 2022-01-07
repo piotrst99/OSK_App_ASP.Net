@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
+
+
 <div id="zajTeoretyczne" style="display: none;">
     <h5>Zajęcia teoretyczne</h5>
 </div>
@@ -15,9 +17,9 @@
     <div class="card">
         <div class="form-inline card-header" style="align-items: center;">
             <div class="col-sm-2">
-                <button class="btn btn-outline-primary " id="previous" onclick="previous()">-1</button>
-                <button class="btn btn-outline-primary " id="previous" onclick="now()">0</button>
-                <button class="btn btn-outline-primary " id="next" onclick="next()">+1</button>
+                <button class="btn btn-outline-primary " id="previous" onclick="previous()"><i style="font-size:12px;" class="icon-left-open"></i></button>
+                <button class="btn btn-outline-primary " id="previous" onclick="now()"><i style="font-size:12px;" class="icon-record"></i></button>
+                <button class="btn btn-outline-primary " id="next" onclick="next()"><i style="font-size:12px;" class="icon-right-open"></i></button>
             </div>
             <h3 class=" col-sm-8" style="text-align:center;" id="monthAndYear"></h3>
             <input id="selectCallendar" class="form-control col-sm-2" type="date" min="2020-01-01" />
@@ -26,6 +28,35 @@
         <div id="practicalTableOfDay" style="overflow: auto;"></div>
         <div id="practicalOnDay" style="overflow: auto;"></div>
 
+    </div>
+
+    <!-- PRACTICAL FOR CANCEL -->
+
+    <div class="row breadcrumb" style="margin: 20px 0 0 0">
+        <div style="float: left; margin-right:auto;">
+            Zajęcia do odwołania
+        </div>
+        <div style="float: right; margin-left: auto;">
+            <button id="showPracticalCancelBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+            <button id="hiddenPracticalCancelBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div id="practicalCancel" class="row breadcrumb" style="display: none; margin: 20px 0 0 0;">
+        <div>
+            <table class="table table-light" id="cancelPracticalTable">
+                <tr id="cancelPracHeader">
+                    <th>Nr</th>
+                    <th>Data</th>
+                    <th>Godzina</th> 
+                    <th>Kursant</th>
+                    <th>Instruktor</th>
+                    <th>Kategoria</th>
+                    <th>Akceptuj / Odrzuć</th>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <!-- ADD PRACTICAL MODAL -->
@@ -117,6 +148,7 @@
         </div>
     </div>
 
+
     <script src="~/Scripts/jquery-3.6.0.js"></script>
 
     <style>
@@ -124,9 +156,9 @@
             cursor: pointer;
         }
 
-            #calendar td:hover {
-                background-color: #CCC;
-            }
+        #calendar td:hover {
+            background-color: #CCC;
+        }
 
         #test123 table {
             margin: 20px;
@@ -173,11 +205,9 @@
         }
     </style>
 
-    <!--<script src="~/StaticFiles/calendar3.js"></script>-->
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
             integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
             crossorigin="anonymous"></script>-->
@@ -189,4 +219,6 @@
 
 </div>
 
+<script src="~/StaticFiles/Schedule/cancelPractical.js"></script>
 <script src="~/StaticFiles/Schedule/schedule.js"></script>
+

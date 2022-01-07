@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OSK_App.DbContexts;
 using OSK_App.Entities;
+using OSK_App.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -152,6 +153,42 @@ namespace OSK_App.Controllers
 
                 return Json(new { result = e.ToString() });
             }
+        }
+
+        [HttpPost]
+        [Route("GetStudentParticipants")]
+        public List<MemberCourse> GetStudentParticipants(int id) {
+        //public List<StudentCourse> GetStudentParticipants(int id) {
+        //public IActionResult GetStudentParticipants(int id) {
+
+            List<MemberCourse> memberCourses = new List<MemberCourse>();
+
+            var participants = context.studentCourses.Where(q => q.CourseID == id).ToList();
+
+            foreach (var member in participants) {
+
+                try {
+                    //var student = context.students.Where(q => q.UserID == member.StudentID).FirstOrDefault();
+                    var studentUser = context.users.Where(q => q.ID == member.StudentID).FirstOrDefault();
+
+                    MemberCourse memberCourse = new MemberCourse() {
+                        Student = studentUser.FirstName + " " + studentUser.Surname,
+                        StartDate = member.StartDate,
+                        EndDate = member.EndDate,
+                        MemberStatus = member.StudentStatus
+                    };
+
+                    memberCourses.Add(memberCourse);
+
+                }
+                catch (Exception e) {
+                    //return Json(new { result = e.ToString() });
+                }
+
+            }
+            //return Json(new { result = participants });
+            //return participants;
+            return memberCourses;
         }
 
     }

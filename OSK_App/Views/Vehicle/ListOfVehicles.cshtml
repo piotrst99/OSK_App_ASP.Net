@@ -5,19 +5,33 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
-<p>
-    <a class="nav-link text-dark" asp-area="" asp-controller="Vehicle" asp-action="AddVehicle">Dodaj pojazd</a>
-</p>
+<link href="~/StaticFiles/Vehicle/vehicleStyle.css" rel="stylesheet" />
 
-<table class="table">
-    <tr>
+<div style="float: left; width: 100%; background-color: #bf8f0a; color: white; font-weight: bold;">
+    <div style="float:left; padding:3px 0 0 5px;"><h4>POJAZD - LISTA POJAZDÓW</h4></div>
+    <div style="float: right;"><a class="nav-link text-light" asp-controller="Vehicle" asp-action="AddVehicle">+ Dodaj pojazd</a></div>
+</div>
+
+<div style="clear:both; padding:10px 10px 30px 10px;">
+
+    <div style="float:left;" id="paginesBtn">
+        <div style="float:left;">
+            <button disabled id="previous" class="btn btn-sm btn-outline-primary" style="cursor:pointer; margin-right:5px;"><i class="icon-left-open"></i></button>
+            <button disabled id="next" class="btn btn-sm btn-outline-primary" style="cursor: pointer; margin-left: 5px;"><i class="icon-right-open"></i></button>
+        </div>
+        <div style="float:left; margin-left:20px;" id="numberPage">Strona 1 / 1</div>
+    </div>
+</div>
+
+<table class="table table-light tablePage">
+    <tr class="trHeader">
         <th>@Html.DisplayNameFor(model => model.RegNumber)</th>
         <th>@Html.DisplayNameFor(model => model.Mark)</th>
         <th>@Html.DisplayNameFor(model => model.Model)</th>
-        <th>@Html.DisplayNameFor(model => model.Course)</th>
+        <th>Przebieg [km]</th>
         <th>@Html.DisplayNameFor(model => model.Category.Symbol)</th>
         <th>@Html.DisplayNameFor(model => model.VehicleStatus.Name)</th>
-        <th>Akcje</th>
+        <th></th>
     </tr>
     @foreach (var item in Model) { 
         <tr class="dane">
@@ -28,16 +42,20 @@
             <td>@Html.DisplayFor(modelItem => item.Category.Symbol)</td>
             <td>@Html.DisplayFor(modelItem => item.VehicleStatus.Name)</td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edytuj</a>
+                <a class="nav-link text-dark icon" asp-controller="Vehicle" asp-action="Details" asp-route-id="@item.ID">
+                    <i class="icon-doc"></i>
+                </a>
+                <a class="nav-link text-dark icon" asp-controller="Vehicle" asp-action="Edit" asp-route-id="@item.ID">
+                    <i class="icon-pencil"></i>
+                </a>
+                <a class="nav-link text-dark icon" asp-controller="Vehicle" asp-action="RemoveVehicle" asp-route-id="@item.ID">
+                    <i class="icon-trash"></i>
+                </a>
+                <!--<a asp-action="Edit" asp-route-id="@item.ID">Edytuj</a>
                 <a asp-action="Details" asp-route-id="@item.ID">Szczegóły</a>
-                <a asp-action="RemoveVehicle" asp-route-id="@item.ID">Usuń</a>
+                <a asp-action="RemoveVehicle" asp-route-id="@item.ID">Usuń</a>-->
             </td>
         </tr>
     }
 </table>
 
-<style>
-    tr.dane:hover {
-        background-color: #4cff00;
-    }
-</style>

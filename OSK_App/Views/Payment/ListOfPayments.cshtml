@@ -5,30 +5,37 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
-<p>
-    <a class="nav-link text-dark" asp-action="AcceptPayment">Przyjmij wpłatę</a>
-</p>
-<table class="table">
+<!--<p><a class="nav-link text-dark" asp-action="AcceptPayment">Przyjmij wpłatę</a></p>-->
+<link href="~/StaticFiles/General/style.css" rel="stylesheet" />
+
+<div>
+    <button type="button" class="btn btn-primary">Wszystko</button>
+    <button type="button" class="btn btn-success">Zapłacone</button>
+    <button type="button" class="btn btn-danger">Niezapłacone</button>
+</div>
+
+<table class="table table-light">
     <tr>
-        <th>ID</th>
         <th>Usługa</th>
         <th>@Html.DisplayNameFor(model => model.Cost)</th>
         <th>@Html.DisplayNameFor(model => model.PaymentDate)</th>
-        <th>@Html.DisplayNameFor(model => model.PaymentTime)</th>
+        <th>Godzina</th>
         <th>Kursant</th>
-        <th>Pracowniki</th>
-        <th>Akcje</th>
+        <th>Pracownik</th>
+        <th></th>
     </tr>
 @foreach (var item in Model) {
-    <tr>
-        <td>@Html.DisplayFor(modelItem => item.ID)</td>
-        <td></td>
+    <tr class="dane">
+        <td>@item.TypePayment.Name</td>
         <td>@Html.DisplayFor(modelItem => item.Cost)</td>
         <td>@Html.DisplayFor(modelItem => item.PaymentDate)</td>
         <td>@Html.DisplayFor(modelItem => item.PaymentTime)</td>
-        <td>@Html.DisplayFor(modelItem => item.Student.UserID)</td>
-        <td>@Html.DisplayFor(modelItem => item.Employee.UserID)</td>
+        <td>@Html.DisplayFor(modelItem => item.Student.User.FirstName) @Html.DisplayFor(modelItem => item.Student.User.Surname)</td>
+        <td>@Html.DisplayFor(modelItem => item.Employee.User.FirstName) @Html.DisplayFor(modelItem => item.Employee.User.Surname)</td>
         <td>
+            <a href="#" nav-link text-dark icon><i class="icon-doc"></i></a>
+            <a href="#" nav-link text-dark icon><i class="icon-pencil"></i></a>
+
             <!--<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
             <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>-->

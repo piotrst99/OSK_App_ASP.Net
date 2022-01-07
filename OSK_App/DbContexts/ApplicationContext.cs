@@ -29,7 +29,7 @@ namespace OSK_App.DbContexts
         public DbSet<Vehicle> vehicles { get; set; }
         public DbSet<VehicleStatus> vehicleStatuses { get; set; }
         public DbSet<TypePayment> typePayments { get; set; }
-        public DbSet<OSK_App.Models.StudentDetails> StudentPayment { get; set; }
-        public DbSet<OSK_App.Models.EmployeeDetails> EmployeeDetails { get; set; }
+        //public DbSet<OSK_App.Models.StudentDetails> StudentPayment { get; set; }
+        //public DbSet<OSK_App.Models.EmployeeDetails> EmployeeDetails { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OSK_App.Entities;
 using System.Globalization;
+using OSK_App.Models;
 
 namespace OSK_App.Controllers
 {
@@ -102,11 +103,54 @@ namespace OSK_App.Controllers
 
         }
 
+        [Route("GetPracticalToCancel")]
+        public IActionResult GetPracticalToCancel(){
+            var practical = context.practicals.Where(q => q.IsCancel).ToList();
+
+            var practicalToCancel = new List<PracticalToCancel>();
+
+            foreach (var p in practical) {
+                //var student = context.students.Where(q => q.UserID == p.StudentID).FirstOrDefault();
+                var studentName = context.users.Where(q => q.ID == p.StudentID).FirstOrDefault();
+                var employeeName = context.users.Where(q => q.ID == p.EmployeeID).FirstOrDefault();
+
+                practicalToCancel.Add(new PracticalToCancel() {
+                    ID = p.ID,
+                    Date = p.Data,
+                    StartTime = p.StartTime,
+                    Student = studentName.FirstName + " " + studentName.Surname,
+                    Employee = employeeName.FirstName+" "+employeeName.Surname,
+                    Category = p.Category
+                });
+
+            }
+
+            return Json(new { result = practicalToCancel });
+        }
+
+        [Route("AcceptCancelPractical")]
+        public bool AcceptCancelPractical(int id) {
+            var practical = context.practicals.Where(q => q.ID == id).FirstOrDefault();
+            context.practicals.Remove(practical);
+            context.SaveChanges();
+            return true;
+        }
+
+        [Route("DeniedCancelPractical")]
+        public bool DeniedCancelPractical(int id) {
+            var practical = context.practicals.Where(q => q.ID == id).FirstOrDefault();
+            practical.IsCancel = false;
+            context.SaveChanges();
+            return true;
+        }
+
         private string ConvertDateFormat(string date){
             return date.Substring(8, 2) + "." + date.Substring(5, 2) + "." + date.Substring(0, 4);
             // yyyy-MM-dd
             // dd.MM.yyyy
         }
+
+
 
     }
 }

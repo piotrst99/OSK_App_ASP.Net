@@ -25,6 +25,15 @@ namespace OSK_App.Controllers
                 TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
                 
                 var payments = context.payments.ToList<Payment>();
+
+                foreach (var p in payments) {
+                    var student = context.students.Where(q => q.UserID == p.StudentID).FirstOrDefault();
+                    var studentUser = context.users.Where(q => q.ID == student.UserID).FirstOrDefault();
+                    var employee = context.employees.Where(q => q.UserID == p.EmployeeID).FirstOrDefault();
+                    var employeeUser = context.users.Where(q => q.ID == employee.UserID).FirstOrDefault();
+                    var typePaiment = context.typePayments.Where(q => q.ID == p.TypePaymentID).FirstOrDefault();
+                }
+
                 return View("ListOfPayments", payments);
             }
             else {
@@ -32,7 +41,7 @@ namespace OSK_App.Controllers
             }
         }
 
-        [HttpGet]
+        /*[HttpGet]
         [Route("PrzyjmijWplate")]
         public IActionResult AcceptPayment(){
             if (HttpContext.Session.GetInt32("_Id") != null) {
@@ -45,7 +54,7 @@ namespace OSK_App.Controllers
         }
 
         [HttpPost]
-        [Route("AcceptPayment")]
+        [Route("PrzyjmijWplate")]
         public IActionResult AcceptPayment(int studentID, int cost, int typePaimentID) {
             int employeeID = (Int32)HttpContext.Session.GetInt32("_Id");
             string s = cost.ToString() + " " + DateTime.Now.ToString("dd/MM/yyyy") + " " + DateTime.Now.ToString("HH:mm") +
@@ -73,7 +82,7 @@ namespace OSK_App.Controllers
             catch (Exception e) {
                 return Json(new { isSave = e.ToString() });
             }
-        }
+        }*/
 
         [HttpPost]
         [Route("Test")]

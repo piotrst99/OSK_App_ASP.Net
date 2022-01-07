@@ -5,10 +5,15 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
+<link href="~/StaticFiles/modalStyle.css" rel="stylesheet" />
+<link href="~/StaticFiles/ListOfCourse/style.css" rel="stylesheet" />
+<link href="~/StaticFiles/General/style.css" rel="stylesheet" />
+
 <p>
     <a class="nav-link text-dark" asp-area="" asp-action="AddCourse">Dodaj kurs</a>
 </p>
-<table class="table">
+
+<table class="table table-light">
     <tr>
         <th>@Html.DisplayNameFor(model => model.Name)</th>
         <th>@Html.DisplayNameFor(model => model.Category.Symbol)</th>
@@ -18,19 +23,45 @@
         <th>Il. kursantów</th>
         <th></th>
     </tr>
-@foreach (var item in Model) {
-    <tr>
-        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-        <td>@Html.DisplayFor(modelItem => item.Category.Symbol)</td>
-        <td>@Html.DisplayFor(modelItem => item.AmountTheoretical)</td>
-        <td>@Html.DisplayFor(modelItem => item.AmountPractical)</td>
-        <td>@Html.DisplayFor(modelItem => item.CourseCost)</td>
-        <td>@Html.DisplayFor(modelItem => item.CountOfStudents)</td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
-            <a asp-action="Details" asp-route-id="@item.ID">Details</a> 
-            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr class="dane">
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category.Symbol)</td>
+            <td>@Html.DisplayFor(modelItem => item.AmountTheoretical)</td>
+            <td>@Html.DisplayFor(modelItem => item.AmountPractical)</td>
+            <td>@Html.DisplayFor(modelItem => item.CourseCost)</td>
+            <td>@Html.DisplayFor(modelItem => item.CountOfStudents)</td>
+            <td>
+                <a class="nav-link text-dark icon" asp-action="Edit" asp-route-id="@item.ID"><i class="icon-pencil"></i></a>
+                <a class="nav-link text-dark icon studentParticipantsBtn" style="cursor:pointer;"><i class="icon-group"></i></a> 
+                <a class="nav-link text-dark icon" asp-action="Delete" asp-route-id="@item.ID"><i class="icon-trash"></i></a>
+                <span id="courseID" style="display:none">@item.ID</span>
+            </td>
+        </tr>
+    }
 </table>
+
+<div id="studentParticipantsModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Uczestnicy kursu</h3>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="membersData">
+                <table id="participantsTable" class="table table-light">
+                    <tr>
+                        <th>Kursant</th>
+                        <th>Data rozpoczęcia</th>
+                        <th>Data zakończenia</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/StaticFiles/ListOfCourse/CourseMembers.js"></script>
+
+

@@ -5,7 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div id="loginPanel" class="col-md-4">
+<link href="~/StaticFiles/Home/loginStyle.css" rel="stylesheet" />
+
+<div id="mainDiv" class="text-center"></div>
+
+<div id="loginText" class="bg-text"><h1>Zaloguj się do panelu</h1></div>
+
+<div id="loginPanel" class="bg-text col-md-4">
     <form asp-action="Login">
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -22,9 +28,13 @@
             <span asp-validation-for="User.Password" class="text-danger"></span>
         </div>
 
+        <div id="errorMessage">@ViewBag.Error</div>
+
         <div>
             <input type="submit" value="Zaloguj" class="btn btn-primary" />
         </div>
 
     </form>
 </div>
+
+<script src="~/StaticFiles/Home/loginResult.js"></script>

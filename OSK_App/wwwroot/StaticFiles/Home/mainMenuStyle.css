@@ -1,0 +1,74 @@
+﻿.itemMenu {
+    width: 20%;
+    margin: 15px;
+    float: left;
+    text-align: center;
+    height: 150px;
+    cursor:pointer;
+    border-radius:10px;
+}
+
+#menuButtons a{
+    text-decoration:none;
+}
+
+
+/*#menuButtons a :hover {
+    background-color: rgb(108, 235, 108, 0.6);
+}*/
+/*.itemMenu :hover {
+    background-color: rgb(108, 235, 108, 0.6);
+}*/
+
+.fontello {
+    font-size: 80px;
+    height: 130px;
+}
+
+
+.fontawesome {
+    margin-top:30px;
+    font-size:70px;
+    height: 90px;
+}
+
+.category {
+    font-size: 20px;
+    width: 100%;
+    height: 20px;
+    margin-bottom: 2px;
+}
+
+#studentBtn {
+    background-color: #f01d26;
+    color: white;
+}
+#employeeBtn {
+    background-color: #368c04;
+    color: white;
+}
+
+#vehicleBtn {
+    background-color: #bf8f0a;
+    color: white;
+}
+
+#calendarBtn {
+    background-color: #65078a;
+    color: white;
+}
+
+#courseBtn {
+    background-color: #033a52;
+    color: white;
+}
+
+#paymentBtn {
+    background-color: #d633c9;
+    color: white;
+}
+
+#settingBtn {
+    background-color: #666b67;
+    color: white;
+}
