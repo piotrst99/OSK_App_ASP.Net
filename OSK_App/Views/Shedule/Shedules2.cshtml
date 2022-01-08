@@ -3,16 +3,19 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
+<link href="~/StaticFiles/Schedule/scheduleStyle.css" rel="stylesheet" />
 
 
 <div id="zajTeoretyczne" style="display: none;">
     <h5>Zajęcia teoretyczne</h5>
 </div>
 
-<link href="~/StaticFiles/Schedule/scheduleStyle.css" rel="stylesheet" />
 
 <div id="zajPraktyczne">
-    <h5>Zajęcia praktyczne</h5>
+    <div style="float: left; width: 100%; background-color: #65078a; color: white; font-weight: bold; margin-bottom:20px;">
+        <div style="float:left; padding:3px 0 0 5px;"><h4>ZAJĘCIA PRAKTYCZNE</h4></div>
+        <!--<div style="float: right;"><a class="nav-link text-light" asp-controller="Vehicle" asp-action="AddVehicle">+ Dodaj pojazd</a></div>-->
+    </div> 
 
     <div class="card">
         <div class="form-inline card-header" style="align-items: center;">
@@ -46,7 +49,7 @@
     <div id="practicalCancel" class="row breadcrumb" style="display: none; margin: 20px 0 0 0;">
         <div>
             <table class="table table-light" id="cancelPracticalTable">
-                <tr id="cancelPracHeader">
+                <tr class="trHeader" id="cancelPracHeader">
                     <th>Nr</th>
                     <th>Data</th>
                     <th>Godzina</th> 

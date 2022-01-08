@@ -7,222 +7,223 @@
 
 <link href="~/StaticFiles/EmployeeDetails/employeeDetails.css" rel="stylesheet" />
 
-<div>
+<div style="width: 100%; background-color: #368c04; color: white; font-weight: bold;">
+    <div style="margin-bottom: 20px; padding: 2px 0 1px 5px;"><h4>PRACOWNIK - SZCZEGÓŁY PRACOWNIKA</h4></div>
+</div>
 
-    <div class="row breadcrumb">
-        <div style="float: left; margin-right:auto;">
-            Dane osobowe i adresowe - @Model.FirstName @Model.Surname
-        </div>
-        <div style="float: right; margin-left: auto;">
-            <div class="" style="float:left;">@Html.ActionLink("Edytuj", "Edit", new { id = Model.ID }, new { @style = "text-decoration: none; color: white; display: inline-block; cursor:pointer;", @class = "btn btn-primary btn-sm" })</div>
-            <button id="showUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
-            <button id="hiddenUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
-        </div>
-        <div style="clear: both;"></div>
+<div class="row breadcrumb">
+    <div style="float: left; margin-right:auto;">
+        Dane osobowe i adresowe - @Model.FirstName @Model.Surname
     </div>
+    <div style="float: right; margin-left: auto;">
+        <div class="" style="float:left;">@Html.ActionLink("Edytuj", "Edit", new { id = Model.ID }, new { @style = "text-decoration: none; color: white; display: inline-block; cursor:pointer;", @class = "btn btn-primary btn-sm" })</div>
+        <button id="showUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+        <button id="hiddenUserDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
 
-    <div id="userData" style="display: none;">
+<div id="userData" style="display: none;">
 
-        <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px; height: 430px;">
-            <input id="role" type="hidden" asp-for="RoleName" />
-            <input id="employeeID" type="hidden" asp-for="ID" />
-            <table class="table table-light" style="margin-bottom: 0rem;">
-                <tr>
-                    <th><label asp-for="FirstName" class="control-label"></label></th>
-                    <td>@Model.FirstName</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="SecondName" class="control-label"></label></th>
-                    <td>@Model.SecondName</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="Surname" class="control-label"></label></th>
-                    <td>@Model.Surname</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="PESEL" class="control-label"></label></th>
-                    <td>@Model.PESEL</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="UserName" class="control-label"></label></th>
-                    <td>@Model.UserName</td>
-                </tr>
-                <tr>
-                    <th><label class="control-label">Uprawnienie</label></th>
-                    <td>@Model.RoleName</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="NrInstructor" class="control-label"></label></th>
-                    <td>@Model.NrInstructor</td>
-                </tr>
-            </table>
-
-        </div>
-
-        <div class="row breadcrumb col-sm-6" style="float: left; margin-left: 4px; height: 430px; ">
-
-            <table class="table table-light" style="margin-bottom: 0rem;">
-                <tr>
-                    <th><label asp-for="Street" class="control-label"></label></th>
-                    <td>@Model.Street @Model.NrHome / @Model.NrLocal</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="Town" class="control-label"></label></th>
-                    <td>@Model.Town</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="PostCode" class="control-label"></label></th>
-                    <td>@Model.PostCode</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="Post" class="control-label"></label></th>
-                    <td>@Model.Post</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="PhoneNumber" class="control-label"></label></th>
-                    <td>@Model.PhoneNumber</td>
-                </tr>
-                <tr>
-                    <th><label asp-for="Email" class="control-label"></label></th>
-                    <td>@Model.Email</td>
-                </tr>
-            </table>
-
-        </div>
-
-        <div style="clear: both;"></div>
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px; height: 430px;">
+        <input id="role" type="hidden" asp-for="RoleName" />
+        <input id="employeeID" type="hidden" asp-for="ID" />
+        <table class="table table-light" style="margin-bottom: 0rem;">
+            <tr>
+                <th><label asp-for="FirstName" class="control-label"></label></th>
+                <td>@Model.FirstName</td>
+            </tr>
+            <tr>
+                <th><label asp-for="SecondName" class="control-label"></label></th>
+                <td>@Model.SecondName</td>
+            </tr>
+            <tr>
+                <th><label asp-for="Surname" class="control-label"></label></th>
+                <td>@Model.Surname</td>
+            </tr>
+            <tr>
+                <th><label asp-for="PESEL" class="control-label"></label></th>
+                <td>@Model.PESEL</td>
+            </tr>
+            <tr>
+                <th><label asp-for="UserName" class="control-label"></label></th>
+                <td>@Model.UserName</td>
+            </tr>
+            <tr>
+                <th><label class="control-label">Uprawnienie</label></th>
+                <td>@Model.RoleName</td>
+            </tr>
+            <tr>
+                <th><label asp-for="NrInstructor" class="control-label"></label></th>
+                <td>@Model.NrInstructor</td>
+            </tr>
+        </table>
 
     </div>
 
-    <div class="row breadcrumb">
-        <div style="float: left; margin-right:auto;">
-            Aktywność pracownika
-        </div>
-        <div style="float: right; margin-left: auto;">
-            <button id="showEmployeeDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
-            <button id="hiddenEmployeeDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
-        </div>
-        <div style="clear: both;"></div>
+    <div class="row breadcrumb col-sm-6" style="float: left; margin-left: 4px; height: 430px; ">
+
+        <table class="table table-light" style="margin-bottom: 0rem;">
+            <tr>
+                <th><label asp-for="Street" class="control-label"></label></th>
+                <td>@Model.Street @Model.NrHome / @Model.NrLocal</td>
+            </tr>
+            <tr>
+                <th><label asp-for="Town" class="control-label"></label></th>
+                <td>@Model.Town</td>
+            </tr>
+            <tr>
+                <th><label asp-for="PostCode" class="control-label"></label></th>
+                <td>@Model.PostCode</td>
+            </tr>
+            <tr>
+                <th><label asp-for="Post" class="control-label"></label></th>
+                <td>@Model.Post</td>
+            </tr>
+            <tr>
+                <th><label asp-for="PhoneNumber" class="control-label"></label></th>
+                <td>@Model.PhoneNumber</td>
+            </tr>
+            <tr>
+                <th><label asp-for="Email" class="control-label"></label></th>
+                <td>@Model.Email</td>
+            </tr>
+        </table>
+
     </div>
 
-    <div id="employeeData" class="row breadcrumb" style="display: none;">
-        <div>
-            <span></span>
-            <select id="selectDate" class="form-control form-control-sm col-sm-2">
-                <option value="1">Wszystko</option>
-                <option value="2">Dzisiaj</option>
-                <option value="3">Wczoraj</option>
-                <option value="4">Ostatni tydzień</option>
-                <option value="5">Najbliższy tydzień</option>
-                <option value="6">Ostatni miesiąc</option>
-                <option value="7">Najbliższy miesiąc</option>
-                <option value="8">Ostatni rok</option>
-            </select>
-            Tutaj najwyzej wstaic daty od do
-        </div>
-        <br />
-        <table id="employeeDriver" class="table table-light" style="max-height: 450px; overflow:auto; margin-bottom: 0rem;">
+    <div style="clear: both;"></div>
+
+</div>
+
+<div class="row breadcrumb">
+    <div style="float: left; margin-right:auto;">
+        Aktywność pracownika
+    </div>
+    <div style="float: right; margin-left: auto;">
+        <button id="showEmployeeDataBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+        <button id="hiddenEmployeeDataBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+
+<div id="employeeData" class="row breadcrumb" style="display: none;">
+    <div>
+        <span></span>
+        <select id="selectDate" class="form-control form-control-sm col-sm-2">
+            <option value="1">Wszystko</option>
+            <option value="2">Dzisiaj</option>
+            <option value="3">Wczoraj</option>
+            <option value="4">Ostatni tydzień</option>
+            <option value="5">Najbliższy tydzień</option>
+            <option value="6">Ostatni miesiąc</option>
+            <option value="7">Najbliższy miesiąc</option>
+            <option value="8">Ostatni rok</option>
+        </select>
+        Tutaj najwyzej wstaic daty od do
+    </div>
+    <br />
+    <table id="employeeDriver" class="table table-light" style="max-height: 450px; overflow:auto; margin-bottom: 0rem;">
+        <tr>
+            <th>Nr</th>
+            <th>Data</th>
+            <th>Godz. rozp.</th>
+            <th>Godz. zak.</th>
+            <th>Kursant</th>
+            <th>Kategoria</th>
+            <th>Przebieg [km]</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        @for (int i = 1; i <= Model.practicals.Count; i++) {
+            <tr class="practicals">
+                <td>@i</td>
+                <td>@Model.practicals[i - 1].Data</td>
+                <td>@Model.practicals[i - 1].StartTime</td>
+                <td>@Model.practicals[i - 1].EndTime</td>
+                <td>@Model.practicals[i - 1].Student.User.FirstName @Model.practicals[i - 1].Student.User.Surname</td>
+                <td></td>
+                <td>@Model.practicals[i - 1].Course</td>
+                <td>@Model.practicals[i - 1].PracticalStatus.Name</td>
+                <td>
+                    <span hidden>@Model.practicals[i - 1].ID</span>
+                    <button id="" type="button" class="btn btn-primary btn-sm editEmployeeDriverBtn">Edytuj</button>
+                </td>
+            </tr>
+        }
+    </table>
+    <div id="employeeDiv">
+        <span></span>
+        <table id="employee" class="table table-light" style="max-height: 450px; overflow: auto; margin-bottom: 0rem;">
             <tr>
                 <th>Nr</th>
                 <th>Data</th>
-                <th>Godz. rozp.</th>
-                <th>Godz. zak.</th>
-                <th>Kursant</th>
-                <th>Kategoria</th>
-                <th>Przebieg [km]</th>
-                <th>Status</th>
+                <th>Od</th>
+                <th>Do</th>
                 <th></th>
             </tr>
-            @for (int i = 1; i <= Model.practicals.Count; i++) {
-                <tr class="practicals">
-                    <td>@i</td>
-                    <td>@Model.practicals[i - 1].Data</td>
-                    <td>@Model.practicals[i - 1].StartTime</td>
-                    <td>@Model.practicals[i - 1].EndTime</td>
-                    <td>@Model.practicals[i - 1].Student.User.FirstName @Model.practicals[i - 1].Student.User.Surname</td>
-                    <td></td>
-                    <td>@Model.practicals[i - 1].Course</td>
-                    <td>@Model.practicals[i - 1].PracticalStatus.Name</td>
-                    <td>
-                        <span hidden>@Model.practicals[i - 1].ID</span>
-                        <button id="" type="button" class="btn btn-primary btn-sm editEmployeeDriverBtn">Edytuj</button>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>Edytuj</td>
+            </tr>
         </table>
-        <div id="employeeDiv">
-            <span></span>
-            <table id="employee" class="table table-light" style="max-height: 450px; overflow: auto; margin-bottom: 0rem;">
-                <tr>
-                    <th>Nr</th>
-                    <th>Data</th>
-                    <th>Od</th>
-                    <th>Do</th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>Edytuj</td>
-                </tr>
-            </table>
-        </div>
     </div>
-
-    <!-- EDIT PRACTICALS DATA -->
-    <div id="editPracticalDataModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Edytuj dane zajęć praktycznych</h3>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <table id="practicalEditTable" class="table table-light">
-                        <tr>
-                            <th>Data</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Godz. rozp.</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Godz. zak.</th>
-                            <td><input type="time" /></td>
-                        </tr>
-                        <tr>
-                            <th>Kursant</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Kategoria</th>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <th>Przebieg [km]</th>
-                            <td><input class="form-control col-sm-3" type="number" min="0" /></td>
-                        </tr>
-                        <tr>
-                            <th>Status</th>
-                            <td>
-                                <select id="practicalStatus" class="form-control col-sm-4">
-                                    <option value="1">Zaplanowany</option>
-                                    <option value="2">Zrealizowany</option>
-                                    <option value="3">Odwołane</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                    <button id="savePracticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Zapisz</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
+
+<!-- EDIT PRACTICALS DATA -->
+<div id="editPracticalDataModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Edytuj dane zajęć praktycznych</h3>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div>
+                <table id="practicalEditTable" class="table table-light">
+                    <tr>
+                        <th>Data</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Godz. rozp.</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Godz. zak.</th>
+                        <td><input type="time" /></td>
+                    </tr>
+                    <tr>
+                        <th>Kursant</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Kategoria</th>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>Przebieg [km]</th>
+                        <td><input class="form-control col-sm-3" type="number" min="0" /></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <select id="practicalStatus" class="form-control col-sm-4">
+                                <option value="1">Zaplanowany</option>
+                                <option value="2">Zrealizowany</option>
+                                <option value="3">Odwołane</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <button id="savePracticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Zapisz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="~/StaticFiles/EmployeeDetails/employeeDetails.js"></script>

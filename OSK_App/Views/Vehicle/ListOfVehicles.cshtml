@@ -21,6 +21,16 @@
         </div>
         <div style="float:left; margin-left:20px;" id="numberPage">Strona 1 / 1</div>
     </div>
+
+    <div>
+        <!--<form asp-controller="Student" asp-action="GetVehicles">-->
+        <div>
+            <a asp-controller="Vehicle" asp-action="GetVehicles" class="btn btn-sm btn-outline-warning" style="float: right; margin-left: 4px;"><i class="icon-arrows-cw"></i></a>
+            <button class="btn btn-sm btn-outline-primary" style="float:right; margin-left: 4px;" type="submit"><i class="icon-search"></i></button>
+            <input name="surname" value="" placeholder="Wyszukaj po nr. rejestracji" id="searchStudentTxt" style="float:right; width:250px;" type="text" />
+        </div>
+    </div>
+
 </div>
 
 <table class="table table-light tablePage">

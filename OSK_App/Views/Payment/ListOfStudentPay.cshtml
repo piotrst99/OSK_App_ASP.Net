@@ -1,7 +1,7 @@
-﻿@model IEnumerable<OSK_App.Entities.Payment>
+﻿@model IEnumerable<OSK_App.Entities.StudentCourse>
 
 @{
-    ViewData["Title"] = "Wpłaty";
+    ViewData["Title"] = "ListOfStudentPayOrNot";
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
@@ -10,23 +10,22 @@
 <style>
 .tablePage {
     margin-top: 15px;
-    border: 1px solid #45A4F1;
+    border: 1px solid #69BF37;
 }
 
 .trHeader {
-    background-color: #45A4F1;
+    background-color: #69BF37;
 }
 
 tr.dane:hover {
-    background-color: rgb(111, 183, 241, 0.6);
-    /*transform: translateX(+30px);*/
+    background-color: rgb(128, 255, 128, 0.6);
 }
 </style>
 
 <div>
-    <a asp-action="GetPayments" class="btn btn-primary">Wszystkie właty</a>
-    <a asp-action="GetStudentsPaymentEntireCourse" class="btn btn-success">Zapłacony kurs</a>
-    <a asp-action="GetStudentNotPaymentEntireCourse" class="btn btn-danger">Niezapłacony kurs</a>
+    <a asp-controller="Payment" asp-action="GetPayments" class="btn btn-primary">Wszystkie właty</a>
+    <a asp-controller="Payment" asp-action="GetStudentsPaymentEntireCourse" class="btn btn-success">Zapłacony kurs</a>
+    <a asp-controller="Payment" asp-action="GetStudentNotPaymentEntireCourse" class="btn btn-danger">Niezapłacony kurs</a>
 </div>
 
 <div style="clear:both; padding:10px 10px 30px 10px;">
@@ -70,26 +69,48 @@ tr.dane:hover {
 
         <table class="table table-light tablePage" id="page@(i+1)" hidden>
             <tr class="trHeader">
-                <th>Usługa</th>
-                <th>@Html.DisplayNameFor(model => model.Cost)</th>
-                <th>@Html.DisplayNameFor(model => model.PaymentDate)</th>
-                <th>Godzina</th>
-                <th>Kursant</th>
-                <th>Pracownik</th>
+                <th>
+                    Kursant
+                </th>
+                <th>
+                    Data rozpoczęcia
+                </th>
+                <th>
+                    Data zakończenia
+                </th>
+                <th>
+                    Suma wpłat
+                </th>
+                <th>
+                    Status kursanta
+                </th>
+                <th>
+                    Kurs
+                </th>
                 <th></th>
             </tr>
             @for (int j = startIndex; j < elementInPage[i]; j++) {
                 startIndex += elementInPage[i];
                 <tr class="dane">
-                    <td>@Model.ElementAt((i * 10) + j).TypePayment.Name</td>
-                    <td>@Model.ElementAt((i * 10) + j).Cost</td>
-                    <td>@Model.ElementAt((i * 10) + j).PaymentDate</td>
-                    <td>@Model.ElementAt((i * 10) + j).PaymentTime</td>
-                    <td>@Model.ElementAt((i * 10) + j).Student.User.FirstName @Model.ElementAt((i * 10) + j).Student.User.Surname</td>
-                    <td>@Model.ElementAt((i * 10) + j).Employee.User.FirstName @Model.ElementAt((i * 10) + j).Employee.User.Surname</td>
                     <td>
-                        <a href="#" nav-link text-dark icon><i class="icon-doc"></i></a>
-                        <a href="#" nav-link text-dark icon><i class="icon-pencil"></i></a>
+                        @Model.ElementAt((i * 10) + j).Student.User.FirstName @Model.ElementAt((i * 10) + j).Student.User.Surname
+                    </td>
+                    <td>
+                        @Model.ElementAt((i * 10) + j).StartDate
+                    </td>
+                    <td>
+                        @Model.ElementAt((i * 10) + j).EndDate
+                    </td>
+                    <td>
+                        @Model.ElementAt((i * 10) + j).SumOfPayment
+                    </td>
+                    <td>
+                        @Model.ElementAt((i * 10) + j).StudentStatus
+                    </td>
+                    <td>
+                        @Model.ElementAt((i * 10) + j).Course.Name
+                    </td>
+                    <td>
                     </td>
                 </tr>
             }
@@ -99,6 +120,7 @@ tr.dane:hover {
     }
 
 }
+
 
 
 <script src="~/StaticFiles/General/userPaginate.js"></script>

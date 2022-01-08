@@ -60,8 +60,6 @@ namespace OSK_App.Controllers
             string strRes = "";
             var zajeciaPraktyczne = context.practicals.Where(q => q.Data == wybranaData).ToList();
 
-            //return Json(new { val = zajeciaPraktyczne.Count().ToString() });
-
             List<Student> kursant2 = new List<Student>();
             List<User> osoba = new List<User>();
 
@@ -82,10 +80,9 @@ namespace OSK_App.Controllers
                         PESEL = null,
                         Address = null,
                         Student = null,
-                        Employee = null
+                        Employee = null,
                     }).Where(q => q.ID == k.UserID).FirstOrDefault();
                 osoba.Add(userKur);
-                //var user = context.osoba.Where(q => q.Id == k.OsobaID).Select(z=>new Osoba());
             }
 
             for (int i = 0; i < zajeciaPraktyczne.Count; i++) {
@@ -101,7 +98,6 @@ namespace OSK_App.Controllers
                 }
             }
 
-            //return Json(new { wynik = strRes });
             return Json(new { wynik = zajeciaPraktyczne });
         }
 
@@ -221,6 +217,25 @@ namespace OSK_App.Controllers
             }
             catch (Exception e) {
                 return Json(new { result = e.ToString() });
+            }
+
+        }
+
+        [Route("EditPracticalData")]
+        public IActionResult EditPracticalData(int practicalID, string endTime, int course, int practicalStatusID) {
+
+            try {
+                var practical = context.practicals.Where(q => q.ID == practicalID).FirstOrDefault();
+
+                practical.EndTime = endTime;
+                practical.Course = course;
+                practical.PracticalStatID = practicalStatusID;
+
+                context.SaveChanges();
+                return Json(new { isEdit = true });
+            }
+            catch (Exception e) {
+                return Json(new { isEdit = e.ToString() });
             }
 
         }

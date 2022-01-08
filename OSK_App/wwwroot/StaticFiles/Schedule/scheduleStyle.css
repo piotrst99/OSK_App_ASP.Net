@@ -82,14 +82,15 @@
 }
 
 .itemTable {
-    background-color: #71aab0;
+    background-color: rgb(200, 199, 196);
     cursor: pointer;
     min-height: 50px;
     margin: 3px 3px 3px 3px;
     padding: 2px 2px 2px 2px;
-    text-align:center;
-    line-height:50px;
+    text-align: center;
+    line-height: 50px;
     border-radius: 5px;
+    color: black;
 }
 
 .itemTable2 {
@@ -99,8 +100,8 @@
     padding: 2px 2px 2px 2px;
 }
 
-.itemTable:hover{
-    background-color: #508890;
+.itemTable:hover {
+    background-color: rgb(123, 158, 224, 0.6);
 }
 
 .buttons {
@@ -110,3 +111,56 @@
 #cancelPracticalTable {
     margin-bottom: 0rem;
 }
+
+.trHeader {
+    background-color: #983ABD;
+}
+
+.itemPlanned {
+    background-color: #E2DC17;
+    cursor: pointer;
+    min-height: 50px;
+    margin: 3px 3px 3px 3px;
+    padding: 2px 2px 2px 2px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+    color: black;
+}
+
+.itemPlanned:hover {
+    background-color: rgb(246, 245, 117, 0.6);
+}
+
+.itemCompleted {
+    background-color: #42D613;
+    cursor: pointer;
+    min-height: 50px;
+    margin: 3px 3px 3px 3px;
+    padding: 2px 2px 2px 2px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+    color: black;
+}
+
+.itemCompleted:hover {
+    background-color: rgb(153, 232, 114, 0.6);
+}
+
+.itemCanceled {
+    background-color: #EA3939;
+    cursor: pointer;
+    min-height: 50px;
+    margin: 3px 3px 3px 3px;
+    padding: 2px 2px 2px 2px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+    color: black;
+}
+
+.itemCanceled:hover {
+    background-color: rgb(232, 114, 114, 0.6);
+}
+

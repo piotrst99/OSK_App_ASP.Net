@@ -1,0 +1,227 @@
+﻿@model OSK_App.Models.EmployeeDetails
+
+@{
+    ViewData["Title"] = "Konto";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<link href="~/StaticFiles/General/settingsStyle.css" rel="stylesheet" />
+<script src="~/StaticFiles/General/settings.js"></script>
+
+<div id="settingsOptions">
+    
+    <div>
+        <div>
+            <div style="margin:5px 5px 2px 5px;">
+                <div class="optionsToClick" style="float:left;">Konto</div>
+                <div style="float:right;" class="expandBtn">Rozwiń</div>
+                <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="item" id="accountOptions" style="display:none">
+                <div class="select">Dane konta</div>
+                <div class="select">Zmiana hasła</div>
+            </div>
+        </div>
+
+        <div>
+            <div style="margin:5px 5px 2px 5px;">
+                <div class="optionsToClick" style="float:left;">Pomoc</div>
+                <div style="float:right;" class="expandBtn">Rozwiń</div>
+                <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                <div style="clear:both;"></div>
+            </div>
+
+            <div class="item" id="helpOptions" style="display:none">
+                <div>
+                    <div class="optionsToClick" style="float:left;">Kursant</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+                    
+                    <div class="item" id="studentOptions" style="display:none">
+                        <div class="select">Dodanie</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Usuwanie</div>
+                        <div class="select">Szczegóły kursanta</div>
+                        <div class="select">Przypisanie do kursu</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="optionsToClick" style="float:left;">Pracownik</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+
+                    <div class="item" id="employeeOptions" style="display:none">
+                        <div class="select">Dodanie</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Usuwanie</div>
+                        <div class="select">Szczegóły pracownika</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="optionsToClick" style="float:left;">Pojazd</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+
+                    <div class="item" id="vehicleOptions" style="display:none">
+                        <div class="select">Dodanie</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Usuwanie</div>
+                        <div class="select">Szczegóły pojazdu</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="optionsToClick" style="float:left;">Harmonogram</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+
+                    <div class="item" id="sheduleOptions" style="display:none">
+                        <div class="select">Dodanie</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Usuwanie</div>
+                        <div class="select">Odwołanie zajęcia</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="optionsToClick" style="float:left;">Kurs</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+
+                    <div class="item" id="courseOptions" style="display:none">
+                        <div class="select">Dodanie</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Lista uczestników</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="optionsToClick" style="float:left;">Wpłata</div>
+                    <div style="float:right;" class="expandBtn">Rozwiń</div>
+                    <div style="float:right;" class="rollUpBtn">Zwiń</div>
+                    <div style="clear:both;"></div>
+
+                    <div class="item" id="paymentOptions" style="display:none">
+                        <div class="select">Przyjmowanie wpłaty</div>
+                        <div class="select">Edycja</div>
+                        <div class="select">Usuwanie</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+<div id="viewPage">
+
+    <div id="userData" style="display:block;">
+
+        <div class="row breadcrumb" style="width:90%; margin:20px auto 0rem auto;">
+            <div class="col-sm-12 form-group" style="font-size: 25px; font-weight: bold; margin-bottom: 0rem;">
+                DANE OSOBOWE
+            </div>
+        </div>
+
+        <div class="row breadcrumb" style="width:90%; margin:20px auto 0 auto;">
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.FirstName" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.FirstName)</div>
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.SecondName" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.SecondName)</div>
+                <span asp-validation-for="@Model.SecondName" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.Surname" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.Surname)</div>
+                <span asp-validation-for="@Model.Surname" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.PESEL" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.PESEL)</div>
+                <span asp-validation-for="@Model.PESEL" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div class="row breadcrumb" style="width:90%; margin:20px auto 0rem auto;">
+            <div class="col-sm-12 form-group" style="font-size: 25px; font-weight: bold; margin-bottom: 0rem; ">
+                DANE ADRESOWE
+            </div>
+        </div>
+
+        <div class="row breadcrumb" style="width: 90%; margin: 20px auto 0 auto;">
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.Street" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.Street)</div>
+                <span asp-validation-for="@Model.Street" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label asp-for="@Model.NrHome" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.NrHome)</div>
+                <span asp-validation-for="@Model.NrHome" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-3 form-group">
+                <label asp-for="@Model.NrLocal" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.NrLocal)</div>
+                <span asp-validation-for="@Model.NrLocal" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.Town" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.Town)</div>
+                <span asp-validation-for="@Model.Town" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-2 form-group">
+                <label asp-for="@Model.PostCode" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.PostCode)</div>
+                <span asp-validation-for="@Model.PostCode" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-4 form-group">
+                <label asp-for="@Model.Post" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.Post)</div>
+                <span asp-validation-for="@Model.Post" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.PhoneNumber" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.PhoneNumber)</div>
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="col-sm-6 form-group">
+                <label asp-for="@Model.Email" class="personalData control-label"></label>
+                <div>@Html.DisplayFor(q => Model.Email)</div>
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="otherView" style="display:none;">
+
+    </div>
+
+</div>
+<div style="clear:both;"></div>
+
+
+

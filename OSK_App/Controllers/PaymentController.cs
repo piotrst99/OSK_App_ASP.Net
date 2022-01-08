@@ -51,14 +51,14 @@ namespace OSK_App.Controllers
             else {
                 return RedirectToAction("Login", "Home");
             }
-        }
+        }*/
 
         [HttpPost]
-        [Route("PrzyjmijWplate")]
+        [Route("AcceptPayment")]
         public IActionResult AcceptPayment(int studentID, int cost, int typePaimentID) {
             int employeeID = (Int32)HttpContext.Session.GetInt32("_Id");
-            string s = cost.ToString() + " " + DateTime.Now.ToString("dd/MM/yyyy") + " " + DateTime.Now.ToString("HH:mm") +
-                " " + studentID.ToString() + " " + employeeID.ToString() + " " + typePaimentID.ToString();
+            /*string s = cost.ToString() + " " + DateTime.Now.ToString("dd/MM/yyyy") + " " + DateTime.Now.ToString("HH:mm") +
+                " " + studentID.ToString() + " " + employeeID.ToString() + " " + typePaimentID.ToString();*/
 
             var studentCourse = context.studentCourses.Where(q => q.StudentID == studentID).FirstOrDefault();
             if(typePaimentID == 1) studentCourse.SumOfPayment += cost;
@@ -82,16 +82,65 @@ namespace OSK_App.Controllers
             catch (Exception e) {
                 return Json(new { isSave = e.ToString() });
             }
-        }*/
+        }
 
-        [HttpPost]
-        [Route("Test")]
-        public IActionResult Test(int userID, double cost, int typePaimentID) {
-            int e = (Int32)HttpContext.Session.GetInt32("_Id");
-            string s = cost.ToString() + " " + DateTime.Now.ToString("dd/MM/yyyy") + " " + DateTime.Now.ToString("HH:mm") +
-                " " + userID.ToString() + " " + e.ToString() + " " + typePaimentID.ToString();
-            return Json(new { wynik = s });
-            //return Content(s);
+        [HttpGet]
+        [Route("ListaKursantowWplacone")]
+        public IActionResult GetStudentsPaymentEntireCourse() {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                List<StudentCourse> studentsCourseEntireCourse = new List<StudentCourse>();
+                var studentCourse = context.studentCourses.ToList();
+
+                foreach (var s in studentCourse) {
+
+                    var course = context.courses.Where(q => q.ID == s.CourseID).FirstOrDefault();
+                    var student = context.students.Where(q => q.UserID == s.StudentID).FirstOrDefault();
+                    var studentUser = context.users.Where(q => q.ID == student.UserID).FirstOrDefault();
+
+                    if (s.SumOfPayment == (int)course.CourseCost) {
+                        studentsCourseEntireCourse.Add(s);
+                    }
+
+                }
+
+                return View("ListOfStudentPay", studentsCourseEntireCourse);
+            
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+        [HttpGet]
+        [Route("ListaKursantowNieWplacone")]
+        public IActionResult GetStudentNotPaymentEntireCourse() {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                List<StudentCourse> studentsCourseNotEntireCourse = new List<StudentCourse>();
+                var studentCourse = context.studentCourses.ToList();
+                
+
+                foreach (var s in studentCourse) {
+
+                    var course = context.courses.Where(q => q.ID == s.CourseID).FirstOrDefault(); 
+                    var student = context.students.Where(q => q.UserID == s.StudentID).FirstOrDefault();
+                    var studentUser = context.users.Where(q => q.ID == student.UserID).FirstOrDefault();
+
+                    if (s.SumOfPayment < (int)course.CourseCost) {
+                        studentsCourseNotEntireCourse.Add(s);
+                    }
+
+                }
+
+                return View("ListOfStudentPayNot", studentsCourseNotEntireCourse);
+
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
         }
 
     }

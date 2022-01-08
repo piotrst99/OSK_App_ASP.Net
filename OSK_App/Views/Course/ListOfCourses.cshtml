@@ -7,14 +7,35 @@
 
 <link href="~/StaticFiles/modalStyle.css" rel="stylesheet" />
 <link href="~/StaticFiles/ListOfCourse/style.css" rel="stylesheet" />
-<link href="~/StaticFiles/General/style.css" rel="stylesheet" />
 
-<p>
-    <a class="nav-link text-dark" asp-area="" asp-action="AddCourse">Dodaj kurs</a>
-</p>
+<div style="float: left; width: 100%; background-color: #033a52; color: white; font-weight: bold;">
+    <div style="float:left; padding:3px 0 0 5px;"><h4>KURS - LISTA KURSÓW</h4></div>
+    <div style="float: right;"><a class="nav-link text-light" asp-controller="Course" asp-action="AddCourse">+ Dodaj kurs</a></div>
+</div>
 
-<table class="table table-light">
-    <tr>
+<div style="clear:both; padding:10px 10px 30px 10px;">
+
+    <div style="float:left;" id="paginesBtn">
+        <div style="float:left;">
+            <button disabled id="previous" class="btn btn-sm btn-outline-primary" style="cursor:pointer; margin-right:5px;"><i class="icon-left-open"></i></button>
+            <button disabled id="next" class="btn btn-sm btn-outline-primary" style="cursor: pointer; margin-left: 5px;"><i class="icon-right-open"></i></button>
+        </div>
+        <div style="float:left; margin-left:20px;" id="numberPage">Strona 1 / 1</div>
+    </div>
+
+    <div>
+        <!--<form asp-controller="Student" asp-action="GetVehicles">-->
+        <div>
+            <a asp-controller="Course" asp-action="GetCourses" class="btn btn-sm btn-outline-warning" style="float: right; margin-left: 4px;"><i class="icon-arrows-cw"></i></a>
+            <button class="btn btn-sm btn-outline-primary" style="float:right; margin-left: 4px;" type="submit"><i class="icon-search"></i></button>
+            <input name="surname" value="" placeholder="Wyszukaj po nazwie kursu" id="searchStudentTxt" style="float:right; width:250px;" type="text" />
+        </div>
+    </div>
+
+</div>
+
+<table class="table table-light tablePage">
+    <tr class="trHeader">
         <th>@Html.DisplayNameFor(model => model.Name)</th>
         <th>@Html.DisplayNameFor(model => model.Category.Symbol)</th>
         <th>@Html.DisplayNameFor(model => model.AmountTheoretical)</th>

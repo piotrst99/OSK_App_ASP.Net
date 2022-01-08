@@ -42,7 +42,7 @@
                     </ul>
                     <ul class="nav navbar-nav">
                         <li id="userSettings" userId="@TempData["UserId"]">
-                            <a class="nav-link text-dark" id="userName" asp-area="" asp-controller="Settings" asp-action="Index"></a>
+                            <a class="nav-link text-dark" id="userName" asp-area="" asp-controller="Settings" asp-action="Account"></a>
                         </li>
                         <li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Panel" asp-action="LogOut">
@@ -55,7 +55,7 @@
         </nav>
     </header>
 
-    <div class="container">
+    <div class="container" id="mainContainer">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

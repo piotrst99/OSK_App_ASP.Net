@@ -5,7 +5,11 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
-<div class="test">
+<div style="width: 100%; background-color: #368c04; color: white; font-weight: bold;">
+    <div style="margin-bottom: 20px; padding: 2px 0 1px 5px;"><h4>PRACOWNIK - DODAJ PRACOWNIKA</h4></div>
+</div>
+
+<div>
     <form asp-action="AddEmployee">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row breadcrumb">

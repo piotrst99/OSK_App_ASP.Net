@@ -29,10 +29,6 @@ namespace OSK_App.Controllers
                 
                 var students = context.students.ToList<Student>();
 
-                /*foreach (var s in students) {
-                    var user = context.users.Where(q => q.ID == s.UserID).FirstOrDefault();
-                }*/
-
                 if (surname == null) {
                     foreach (var s in students) {
                         var user = context.users.Where(q => q.ID == s.UserID).FirstOrDefault();
@@ -71,15 +67,7 @@ namespace OSK_App.Controllers
 
                     students = students.Where(q => q.User.FirstName != "test").ToList();
 
-                    /*foreach (var s in students) {
-                        var user = context.users.Where(q => q.ID == s.UserID && q.Surname.Contains(surname)).FirstOrDefault();
-                    }
-                    return Content(students.ToString());*/
-                    //return Json(new {r = students.ToString() });
-                    //return Json(new {r = students.Count().ToString() });
                 }
-
-                //return Content(Math.Ceiling((decimal)students.Count / 10).ToString());
 
                 return View("ListOfStudents", students);
             }

@@ -65,7 +65,7 @@ function setCancelPracticalData(tab) {
             var iTag2 = document.createElement('i'); iTag2.className = 'icon-cancel-1';
             var noBtn = document.createElement('button'); noBtn.appendChild(iTag2);  noBtn.classList = 'deniedBtn btn btn-sm btn-danger';
 
-            yesBtn.style = 'margin-right: 10px; margin-left:15%'; noBtn.style = 'margin-left: 10px; margin-right:15%';
+            yesBtn.style = 'margin-right: 10px; margin-left:15%; margin-top:10px;'; noBtn.style = 'margin-left: 10px; margin-right:15%; margin-top:10px;';
             var tdClone = td.cloneNode(true); tdClone.classList = 'buttons';
             //tdClone.appendChild(yesBtn); tdClone.appendChild(noBtn); tr.appendChild(tdClone);
             tr.appendChild(yesBtn); tr.appendChild(noBtn);

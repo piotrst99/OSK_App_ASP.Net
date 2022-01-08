@@ -4,6 +4,7 @@ const practicalOnDay = document.getElementById('practicalOnDay');
 const practicalDataModal = document.getElementById('practicalDataModal');
 const addPracticalModal = document.getElementById('addPracticalModal');
 const practicalStatus = document.getElementById('practicalStatus');
+const savePracticalDataBtn = document.getElementById('savePracticalDataBtn');
 
 let monthAndYear = document.getElementById("monthAndYear");
 
@@ -152,19 +153,23 @@ function sprNumberData(val) {
 }
 
 function setData2(nr, val, dane) {
-    //for (var i = 0; i < dane.length; i++) {
     for (var i = 0; i < 6; i++) {
 
         if (i < dane.length) {
             $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).html(dane[i].student.user.firstName + " " + dane[i].student.user.surname);
             $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).attr('zp', dane[i].id);
 
-            //document.getElementById('#zaj' + ((val * 6) + i + 1)).removeEventListener('click');
-            //console.log(document.getElementById('#zaj' + ((val * 6) + i + 1)));//.removeEventListener('click');
+            $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).removeClass('itemTable');
+            if (dane[i].practicalStatID == 1) {
+                $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).addClass('itemPlanned');
+            }
+            else if (dane[i].practicalStatID == 2) {
+                $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).addClass('itemCompleted');
+            }
+            else if (dane[i].practicalStatID == 3) {
+                $('#practicalOnDay').find('#' + nr).find('#zaj' + ((val * 6) + i + 1)).addClass('itemCanceled');
+            }
 
-
-            //$('#zaj' + ((val * 6) + i + 1)).click(function () { return false;});
-            //$('#zaj' + ((val * 6) + i + 1)).unbind();
 
             $('#zaj' + ((val*6) + i + 1)).click(function () {
                 $('#szczegolyZaj').attr('zp', $(this).attr('zp'));
@@ -177,9 +182,6 @@ function setData2(nr, val, dane) {
                     success: function (data) {
                         var d = data.wynik;
 
-                        //console.log(d);
-
-
                         $('#PracticID').text(d.id);
                         $('#date').text(d.data);
                         $('#startTime').text(d.startTime);
@@ -187,8 +189,6 @@ function setData2(nr, val, dane) {
                         $('#employee').text(d.employee.user.firstName + " " + d.employee.user.surname);
                         $('#course > :input').val(d.course);
                         practicalDataModal.style.display = 'block';
-
-                        //$('#editBtn').click(loadEditContent);
                     }
 
                 });
@@ -201,7 +201,7 @@ function setData2(nr, val, dane) {
 
                 $('#plannedDate').text(selectDate.getFullYear() + '-' + sprNumberData(selectDate.getMonth() + 1) + '-' +
                     sprNumberData(selectDate.getDate()));
-                //console.log(i);
+
                 $('#plannedStartTime').text(tabHours[val][0].substring(0,5));
 
                 $.ajax({
@@ -230,7 +230,6 @@ function setData2(nr, val, dane) {
                             $('#employeeSelect').append(option);
                         }
 
-
                     }
                 });
 
@@ -238,7 +237,6 @@ function setData2(nr, val, dane) {
 
             });
         }
-
 
     }
 }
@@ -257,7 +255,6 @@ addPracticalDataBtn.addEventListener('click', () => {
         data: { data: wybData, kursantID: kursantId, instruktorID: instruktorId, godzStart: godzina },
         success: function (data) {
             if (data.czyDodano) {
-                //createDiv2(selectDay, (selectMonth), selectYear);
                 createDiv2(selectDate);
                 $('#szczegolyZaj').html('');
             }
@@ -272,26 +269,19 @@ addPracticalDataBtn.addEventListener('click', () => {
 });
 
 removePracticalDataBtn.addEventListener('click', () => {
-
     usunZajeciaPraktyczne($('#PracticID').text());
     practicalDataModal.style.display = 'none';
-
-    //console.log($('#PracticID').text());
-        
-    /*$.ajax({
-        type: 'POST',
-        dataType: 'JSON',
-        url: '/Zajecia/deleteZajeciaPraktyczne',
-        data: { idZajPrak: id },
-        success: function (data) {
-            if (data.czyUsunieto) {
-                //createDiv2(selectDay, (selectMonth), selectYear);
-                createDiv2(selectDate);
-                $('#szczegolyZaj').html('');
-            }
-        }
-    });*/
 });
+
+savePracticalDataBtn.addEventListener('click', () => {
+    var endTime = document.getElementById('endTime').querySelector('input').value;
+    var course = document.getElementById('course').querySelector('input').value;
+    var practicalStatus = document.getElementById('practicalStatus');
+    //console.log($('#PracticID').text() + " " + endTime + " " + course + " " + practicalStatus);
+    edytujZajeciaPraktyczne($('#PracticID').text(), endTime, course, practicalStatus.options[practicalStatus.selectedIndex].value);
+    practicalDataModal.style.display = 'none';
+});
+
 
 practicalStatus.addEventListener('change', function () {
     if (practicalStatus.value != 2) {
@@ -384,18 +374,10 @@ function loadEditContent() {
 }
 
 function dodajZajeciePraktyczne() {
-    /*var date = new Date(selectCallendar.value);
-
-    var selectYear = selectDate.getFullYear();
-    var selectMonth = selectDate.getMonth() + 1;
-    var selectDay = selectDate.getDate();*/
-
     var wybData = selectDate.getFullYear() + "-" + sprNumberData(selectDate.getMonth()+1) + "-" + sprNumberData(selectDate.getDate());
     var godzina = $('#godzZaj').text() + ":00";
     var kursantId = $('#kursantTxt').val();
     var instruktorId = $('#instruktorTxt').val();
-    //alert(wybData);
-    //console.log(wybData + " " + godzina + " " + kursantId + " " + instruktorId);
 
     $.ajax({
         type: 'POST',
@@ -404,7 +386,6 @@ function dodajZajeciePraktyczne() {
         data: { data: wybData, kursantID: kursantId, instruktorID: instruktorId, godzStart: godzina },
         success: function (data) {
             if (data.czyDodano) {
-                //createDiv2(selectDay, (selectMonth), selectYear);
                 createDiv2(selectDate);
                 $('#szczegolyZaj').html('');
             }
@@ -417,13 +398,6 @@ function dodajZajeciePraktyczne() {
 }
 
 function usunZajeciaPraktyczne(id) {
-
-    /*var date = new Date(selectCallendar.value);
-
-    var selectYear = date.getFullYear();
-    var selectMonth = date.getMonth() + 1;
-    var selectDay = date.getDate();*/
-
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
@@ -431,7 +405,6 @@ function usunZajeciaPraktyczne(id) {
         data: { idZajPrak: id },
         success: function (data) {
             if (data.czyUsunieto) {
-                //createDiv2(selectDay, (selectMonth), selectYear);
                 createDiv2(selectDate);
                 $('#szczegolyZaj').html('');
             }
@@ -439,6 +412,20 @@ function usunZajeciaPraktyczne(id) {
     });
 }
 
+function edytujZajeciaPraktyczne(id, endTime, course, practicalStatus) {
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: '/Zajecia/EditPracticalData',
+        data: { practicalID: id, endTime: endTime, course: course, practicalStatusID: practicalStatus },
+        success: function (data) {
+            if (data.isEdit) {
+                createDiv2(selectDate);
+                $('#szczegolyZaj').html('');
+            }
+        }
+    });
+}
 
 function createPracticalTableOfDay() {
     var practicalTable = document.createElement('table');

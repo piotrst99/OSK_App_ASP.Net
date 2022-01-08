@@ -2,3 +2,46 @@
     max-height: 400px;
     overflow: auto;
 }
+
+.icon {
+    float: left;
+    padding: 0px 2px;
+}
+
+.icon-trash {
+    color: red;
+    padding: 0rem;
+}
+
+.icon-doc {
+    color: green;
+    padding: 0rem;
+}
+
+.icon-pencil {
+    color: blue;
+    padding: 0rem;
+}
+
+tr.dane {
+    transition: transform 750ms;
+}
+
+tr.dane:hover {
+    background-color: rgb(115, 158, 229 , 0.6);
+    /*transform: translateX(+30px);*/
+}
+
+.icons {
+    width: 120px;
+}
+
+.tablePage {
+    margin-top: 15px;
+    border: 1px solid #366D85;
+}
+
+.trHeader {
+    background-color: #366D85;
+    color: white;
+}

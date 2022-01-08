@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
+<div style="width: 100%; background-color: #368c04; color: white; font-weight: bold;">
+    <div style=" margin-bottom: 20px; padding: 2px 0 1px 5px;"><h4>PRACOWNIK - EDYUJ DANE PRACOWNIKA</h4></div>
+</div>
+
 <form asp-action="Edit">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="UserID" />
