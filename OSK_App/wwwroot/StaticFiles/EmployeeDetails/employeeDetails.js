@@ -235,6 +235,58 @@ function refreshPracticalDetails(val) {
     
 }
 
+function refreshPracticalDetailsForReport(beginDate, endDate) {
+    var employeeId = document.getElementById('employeeID').value;
+    var today = new Date();
+
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: '/PratcicalCourse/GetPracticalForEmployee',
+        data: { id: employeeId, beginDate: beginDate, endDate: endDate },
+        success: function (data) {
+            //console.log(data.result);
+            var resultData = data.result;
+            var practicalData = document.getElementById('employeeDriver').getElementsByTagName('tr');
+
+            for (let i = practicalData.length - 1; i > 0; i--) practicalData[i].remove();
+
+            if (resultData.length > 0) {
+                for (let i = 0; i < resultData.length; i++) {
+                    var tr = document.createElement('tr'); tr.className = 'practicals';
+                    var td = document.createElement('td'); td.innerHTML = (i + 1); tr.appendChild(td);
+
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].data; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].startTime; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].endTime; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].student.user.firstName + " " + resultData[i].student.user.surname; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = ''; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].course; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = resultData[i].practicalStatus.name; tr.appendChild(tdClone);
+                    var tdClone = td.cloneNode(true); tdClone.innerHTML = '';
+
+                    var span = document.createElement('span');
+                    span.innerHTML = resultData[i].id; span.setAttribute('hidden', false);
+
+                    var btn = document.createElement('button');
+                    btn.innerHTML = 'Edytuj'; btn.type = 'button'; btn.className = 'btn btn-primary btn-sm editEmployeeDriverBtn';
+
+                    tdClone.innerHTML += span.outerHTML + btn.outerHTML;
+                    tr.appendChild(tdClone);
+
+                    document.getElementById('employeeDriver').appendChild(tr);
+                }
+                getCategories();
+            }
+
+
+            addEditButtonClick();
+
+        }
+    });
+
+
+}
 
 function correctDateValue(val) {
     if (val == 0) {

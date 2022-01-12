@@ -22,6 +22,11 @@ const errorCourseMsg = document.getElementById('errorCourseMsg');
 const studentCourseDetailsBtn = document.getElementById('studentCourseDetailsBtn');
 const showStudentCourseModal = document.getElementById('showStudentCourseModal');
 
+const courseDetailBtn = document.getElementById('courseDetailBtn');
+const practicalBtn = document.getElementById('practicalBtn');
+const coursePage = document.getElementById('coursePage');
+const practicalPage = document.getElementById('practicalPage');
+
 showUserDataBtn.style.width = '60px';
 hiddenUserDataBtn.style.width = '60px';
 showPaymentDataBtn.style.width = '60px';
@@ -96,11 +101,22 @@ var closeShowStudentCourse = document.getElementsByClassName("close")[1];
 if (studentCourseDetailsBtn != null) {
     studentCourseDetailsBtn.addEventListener('click', () => {
         showStudentCourseModal.style.display = 'block';
+        coursePage.style.display = 'block';
     });
 }
 
 closeShowStudentCourse.addEventListener('click', () => {
     showStudentCourseModal.style.display = 'none';
+});
+
+courseDetailBtn.addEventListener('click', () => {
+    coursePage.style.display = 'block';
+    practicalPage.style.display = 'none';
+});
+
+practicalBtn.addEventListener('click', () => {
+    coursePage.style.display = 'none';
+    practicalPage.style.display = 'block';
 });
 
 window.onclick = function (event) {
@@ -284,3 +300,24 @@ function GetCourseName(val) {
     });
 }
 
+function GetCourseDetailForStudent() {
+    $.ajax({
+        type: 'POST',
+        dataType: 'JSON',
+        url: '/Kurs/GetCourseCategory',
+        data: { categoryId: val },
+        success: function (data) {
+            var array = data.wynik;
+
+            $('#listCourses option').remove();
+
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement('option');
+                option.value = array[i].id;
+                option.innerHTML = array[i].name;
+                $('#listCourses').append(option);
+            }
+
+        }
+    });
+}

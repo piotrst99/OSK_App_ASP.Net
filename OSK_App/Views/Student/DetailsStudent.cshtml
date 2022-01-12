@@ -6,6 +6,7 @@
 }
 
 <link href="~/StaticFiles/Student/studentDetails.css" rel="stylesheet" />
+<link href="~/StaticFiles/Student/listOfStudentStyle.css" rel="stylesheet" />
 
 <div style="width:100%; background-color: #f01d26; color:white; font-weight:bold;">
     <div style="margin-bottom:20px; padding: 2px 0 1px 5px;"><h4>KURSANT - SZCZEGÓŁY KURSANTA</h4></div>
@@ -102,7 +103,7 @@
 <div class="row breadcrumb" id="studentCourses" style="display: none">
     <div>
         <table class="table table-light" style="margin-bottom: 0rem;">
-            <tr>
+            <tr class="trHeader">
                 <th>Nr</th>
                 <th>Kategoria</th>
                 <th>Data rozpoczęcia</th>
@@ -113,7 +114,7 @@
                 <th></th>
             </tr>
             @for (int i = 1; i <= @Model.studentCourses.Count(); i++) {
-                <tr class="courseData">
+                <tr class="courseData dane">
                     <td>@i</td>
                     <td>@Model.studentCourses[i - 1].Course.Category.Symbol</td>
                     <td>@Model.studentCourses[i - 1].StartDate</td>
@@ -121,7 +122,10 @@
                     <td>@Model.studentCourses[i - 1].Course.CourseCost</td>
                     <td>@Model.studentCourses[i - 1].SumOfPayment</td>
                     <td>@Model.studentCourses[i - 1].StudentStatus</td>
-                    <td><button id="studentCourseDetailsBtn" type="button" class="btn btn-primary btn-sm">Szczegóły</button></td>
+                    <td><button id="studentCourseDetailsBtn" type="button" class="btn btn-sm">
+                            <i class="icon-doc"></i>
+                        </button>
+                    </td>
                 </tr>
             }
         </table>
@@ -146,7 +150,7 @@
             </div>
             <div style="clear: both;"></div>
             <div id="errorCourseMsg" style="color: red;"></div>
-            <div class="col-sm-5 form-group" style="clear:both; margin-top;">
+            <div class="col-sm-5 form-group" style="clear:both;">
                 <button id="addStudentCourseBtn" type="button" class="btn btn-success">Dodaj</button>
             </div>
         </div>
@@ -162,33 +166,77 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
-            <div>Ilość zrealizowanych zajeć: @Model.practicals.Where(q => q.PracticalStatID == 2).Count()</div>
-            <div id="practicalList" style="max-height: 500px; overflow: auto;">
-                <table class="table table-light" style="margin-bottom: 0rem;">
-                    <tr>
-                        <th>Nr</th>
-                        <th>Data</th>
-                        <th>Godzina</th>
-                        <th>Instruktor</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                    @for (int i = 1; i <= Model.practicals.Count; i++) {
-                        <tr>
-                            <td>@i</td>
-                            <td>@Model.practicals[i - 1].Data</td>
-                            <td>@Model.practicals[i - 1].StartTime</td>
-                            <td>@Model.practicals[i - 1].Employee.User.FirstName @Model.practicals[i - 1].Employee.User.Surname</td>
-                            <td>@Model.practicals[i - 1].PracticalStatus.Name</td>
-                            <td></td>
-                        </tr>
-                    }
-                </table>
-            </div>
             <div>
-                <button id="" type="button" class="btn btn-success">Usuń</button>
-                <button id="" type="button" class="btn btn-success">Rezygnacja</button>
-                <button id="" type="button" class="btn btn-success">Zakończ kurs</button>
+                <button id="courseDetailBtn" class="btn btn-primary btn-sm">Kurs</button>
+                <button id="practicalBtn" class="btn btn-primary btn-sm">Zajęcia</button>
+            </div>
+            <div id="coursePage" style="max-height: 500px; display: none;">
+                <div>
+                    <table id="courseDetailTable" class="table table-light">
+                        <tr>
+                            <th>Nazwa kursu</th>
+                            <td id="courseName">@Model.studentCourses[0].Course.Name</td>
+                        </tr>
+                        <tr>
+                            <th>Data rozpoczęcia</th>
+                            <td id="startDate">@Model.studentCourses[0].StartDate</td>
+                        </tr>
+                        <tr>
+                            <th>Data zakończenia</th>
+                            <td id="endDate">@Model.studentCourses[0].EndDate</td>
+                        </tr>
+                        <tr>
+                            <th>Ilość zrealizowanych godzin praktycznych</th>
+                            <td id="amountPractical">4/30</td>
+                        </tr>
+                        <tr>
+                            <th>Ilość dodatkowych zajęć</th>
+                            <td id="extraHours">@Model.studentCourses[0].ExtraHours</td><!-- 2 -->
+                        </tr>
+                        <tr>
+                            <th>Egzamin teoretyczny wewnętrzny</th>
+                            <td id="theoreticalExam">Nie przystąpił</td>
+                        </tr>
+                        <tr>
+                            <th>Egzamin praktyczny wewnętrzny</th>
+                            <td id="practicalExam">Nie przystąpił</td>
+                        </tr>
+                        <tr>
+                            <th>Szkolenie z zakresu bezpieczeństwa</th>
+                            <td id="securityLesson">Nie uczestniczył</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <button id="" type="button" class="btn btn-warning">Usuń</button>
+                    <button id="" type="button" class="btn btn-danger">Rezygnacja</button>
+                    <button id="" type="button" class="btn btn-primary">Zakończ kurs</button>
+                </div>
+            </div>
+            <div id="practicalPage" style="display: none;">
+                <div>Ilość zrealizowanych zajeć: @Model.practicals.Where(q => q.PracticalStatID == 2).Count()</div>
+                <div id="practicalList" style="max-height: 500px; overflow: auto;">
+                    <table class="table table-light" style="margin-bottom: 0rem;">
+                        <tr>
+                            <th>Nr</th>
+                            <th>Data</th>
+                            <th>Godzina</th>
+                            <th>Instruktor</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        @for (int i = 1; i <= Model.practicals.Count; i++) {
+                            <tr>
+                                <td>@i</td>
+                                <td>@Model.practicals[i - 1].Data</td>
+                                <td>@Model.practicals[i - 1].StartTime</td>
+                                <td>@Model.practicals[i - 1].Employee.User.FirstName @Model.practicals[i - 1].Employee.User.Surname</td>
+                                <td>@Model.practicals[i - 1].PracticalStatus.Name</td>
+                                <td></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -242,9 +290,9 @@
 
 <div id="studentPaymemts" style="display: none" class="row breadcrumb">
     <div>Całkowita suma wpłat: @Model.payments.Sum(q => q.Cost) zł</div>
-    <table class="table table-light">
-        <tr>
-            <th>ID</th>
+    <table class="table table-light tablePage">
+        <tr class="trHeader">
+            <th>Nr</th>
             <th>Rodzaj usługi</th>
             <th>Koszt</th>
             <th>Data wpłaty</th>
@@ -252,18 +300,24 @@
             <th>Pracownik</th>
             <th>Akcje</th>
         </tr>
-        @foreach (var item in Model.payments) {
+        @for(int i=1; i<=Model.payments.Count();i++) {
             <tr class="dane">
-                <td>@item.ID</td>
-                <td>@item.TypePayment.Name</td>
-                <td>@item.Cost</td>
-                <td>@item.PaymentDate</td>
-                <td>@item.PaymentTime</td>
-                <td>@item.Employee.User.FirstName @item.Employee.User.Surname</td>
+                <td>@i</td>
+                <td>@Model.payments[i-1].TypePayment.Name</td>
+                <td>@Model.payments[i - 1].Cost</td>
+                <td>@Model.payments[i - 1].PaymentDate</td>
+                <td>@Model.payments[i - 1].PaymentTime</td>
+                <td>@Model.payments[i - 1].Employee.User.FirstName @Model.payments[i - 1].Employee.User.Surname</td>
                 <td>
-                    @Html.ActionLink("Szczegóły", "", new { id = item.ID })
-                    @Html.ActionLink("Edytuj", "", new { id = item.ID })
-                    @Html.ActionLink("Usuń", "", new { id = item.ID })
+                    <a class="nav-link text-dark icon" asp-controller="" asp-action="" asp-route-id="@Model.payments[i-1].ID">
+                        <i class="icon-doc"></i>
+                    </a>
+                    <a class="nav-link text-dark icon" asp-controller="" asp-action="" asp-route-id="@Model.payments[i-1].ID">
+                        <i class="icon-pencil"></i>
+                    </a>
+                    <a class="nav-link text-dark icon" asp-controller="" asp-action="" asp-route-id="@Model.payments[i-1].ID">
+                        <i class="icon-trash"></i>
+                    </a>
                 </td>
             </tr>
         }

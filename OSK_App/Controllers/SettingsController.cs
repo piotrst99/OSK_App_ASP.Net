@@ -67,5 +67,15 @@ namespace OSK_App.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
+
+        [HttpPost]
+        [Route("ZmienHaslo")]
+        public IActionResult ChangePassword(int UserID, string password) {
+            var user = context.users.Where(q => q.ID == UserID).FirstOrDefault();
+            user.Password = password;
+            context.SaveChanges();
+            return Json(new { result = true });
+        }
+
     }
 }

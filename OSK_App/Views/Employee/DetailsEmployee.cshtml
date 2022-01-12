@@ -6,6 +6,10 @@
 }
 
 <link href="~/StaticFiles/EmployeeDetails/employeeDetails.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js" ></script>
+<!--<script src="html2pdf.bundle.min.js"></script>-->
 
 <div style="width: 100%; background-color: #368c04; color: white; font-weight: bold;">
     <div style="margin-bottom: 20px; padding: 2px 0 1px 5px;"><h4>PRACOWNIK - SZCZEGÓŁY PRACOWNIKA</h4></div>
@@ -28,7 +32,7 @@
     <div class="row breadcrumb col-sm-6" style="float: left; margin-right: 4px; height: 430px;">
         <input id="role" type="hidden" asp-for="RoleName" />
         <input id="employeeID" type="hidden" asp-for="ID" />
-        <table class="table table-light" style="margin-bottom: 0rem;">
+        <table id="employeePersonal" class="table table-light" style="margin-bottom: 0rem;">
             <tr>
                 <th><label asp-for="FirstName" class="control-label"></label></th>
                 <td>@Model.FirstName</td>
@@ -110,7 +114,12 @@
 <div id="employeeData" class="row breadcrumb" style="display: none;">
     <div>
         <span></span>
-        <select id="selectDate" class="form-control form-control-sm col-sm-2">
+        <div style="float:right; margin-right:0;">
+            <input id="beginDateSelect" style="float: left; margin-right: 5px;" class="form-control col-sm-5" type="date" min="2020-01-01" />
+            <input id="endDateSelect" style="float:left; margin:0 5px 0 5px" class="form-control col-sm-5" type="date" min="2020-01-01" />
+            <button id="selectRangeDates" class="btn btn-sm btn-outline-primary" margin-left:10px;">Raport</button>
+        </div>
+        <select id="selectDate" style="float:left;" class="form-control form-control-sm col-sm-2">
             <option value="1">Wszystko</option>
             <option value="2">Dzisiaj</option>
             <option value="3">Wczoraj</option>
@@ -120,9 +129,8 @@
             <option value="7">Najbliższy miesiąc</option>
             <option value="8">Ostatni rok</option>
         </select>
-        Tutaj najwyzej wstaic daty od do
     </div>
-    <br />
+    <br /> <br />
     <table id="employeeDriver" class="table table-light" style="max-height: 450px; overflow:auto; margin-bottom: 0rem;">
         <tr>
             <th>Nr</th>
@@ -224,6 +232,9 @@
     </div>
 </div>
 
+<div id="reportData" style="display:none;"></div>
 
 
 <script src="~/StaticFiles/EmployeeDetails/employeeDetails.js"></script>
+<script src="~/StaticFiles/EmployeeDetails/employeeReport.js"></script>
+

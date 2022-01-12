@@ -70,7 +70,7 @@ function setClick() {
     select[13].addEventListener('click', () => { alert('Usuwanie'); });
     select[14].addEventListener('click', () => { alert('Szczegóły pojazdu'); });
 
-    select[15].addEventListener('click', () => { alert('Dodanie'); });
+    select[15].addEventListener('click', () => { addPracticalHelp(); });
     select[16].addEventListener('click', () => { alert('Edycja'); });
     select[17].addEventListener('click', () => { alert('Usuwanie'); });
     select[18].addEventListener('click', () => { alert('Odwołanie zajęcia'); });
@@ -134,4 +134,18 @@ function editStudentHelp() {
         }
     });
 
+}
+
+function addPracticalHelp() {
+    document.getElementById('userData').style.display = 'none';
+    document.getElementById('otherView').innerHTML = '';
+    document.getElementById('otherView').style.display = 'block';
+
+    $.ajax({
+        url: "/StaticFiles/SettingsView/addPracticalHelp.html",
+        type: 'GET',
+        success: function (response) {
+            $('#otherView').html($($.parseHTML(response)).html());
+        }
+    });
 }

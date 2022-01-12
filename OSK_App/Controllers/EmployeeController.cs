@@ -262,5 +262,18 @@ namespace OSK_App.Controllers
             }
         }
 
+        [Route("GetEmployeeDataToReport")]
+        public IActionResult GetEmployeeDataToReport(int employeeID) {
+
+            List<int> dane = new List<int>();
+            
+            var listOfPractical = context.practicals.Where(q => q.EmployeeID == employeeID).ToList();
+
+            dane.Add(listOfPractical.Where(q => q.PracticalStatID == 2).Count());
+            dane.Add(listOfPractical.Where(q => q.PracticalStatID == 3).Count());
+
+            return Json(new { result = dane });
+        }
+
     }
 }

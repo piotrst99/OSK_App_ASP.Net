@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using OSK_API.Models;
 using OSK_App.DbContexts;
 using OSK_App.Entities;
 using OSK_App.Models;
@@ -231,7 +232,9 @@ namespace OSK_App.Controllers
 
                     payments = userPayments,
                     studentCourses = studentCourses,
-                    practicals = studentPracticals
+                    practicals = studentPracticals,
+
+                    
                 };
 
 

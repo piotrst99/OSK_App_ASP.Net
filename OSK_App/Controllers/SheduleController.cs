@@ -165,6 +165,10 @@ namespace OSK_App.Controllers
             //var id = context.practicals.Max(q => q.Id);
             //id += 1;
 
+            var studentCourseID = context.studentCourses.Where(q => q.StudentID == kursantID).Select(q => q.CourseID).FirstOrDefault();
+            var course = context.courses.Where(q => q.ID == studentCourseID).FirstOrDefault();
+            var category = context.categories.Where(q => q.ID == course.CategoryID).FirstOrDefault();
+
             var zajeciaPraktyczne = new Practical() {
                 StudentID = kursantID,
                 EmployeeID = instruktorID,
@@ -174,7 +178,8 @@ namespace OSK_App.Controllers
                 EndTime = null,
                 Course = 0,
                 PracticalStatID = 1,
-                IsCancel = false
+                IsCancel = false,
+                Category = category.Symbol
             };
 
             context.practicals.Add(zajeciaPraktyczne);

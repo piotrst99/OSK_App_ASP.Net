@@ -57,8 +57,6 @@ namespace OSK_App.Controllers
         [Route("AcceptPayment")]
         public IActionResult AcceptPayment(int studentID, int cost, int typePaimentID) {
             int employeeID = (Int32)HttpContext.Session.GetInt32("_Id");
-            /*string s = cost.ToString() + " " + DateTime.Now.ToString("dd/MM/yyyy") + " " + DateTime.Now.ToString("HH:mm") +
-                " " + studentID.ToString() + " " + employeeID.ToString() + " " + typePaimentID.ToString();*/
 
             var studentCourse = context.studentCourses.Where(q => q.StudentID == studentID).FirstOrDefault();
             if(typePaimentID == 1) studentCourse.SumOfPayment += cost;
@@ -73,6 +71,11 @@ namespace OSK_App.Controllers
                 PaymentStatID = 1,
                 TypePaymentID = typePaimentID
             };
+
+            /*if (typePaimentID == 2) {
+                var coure = context.courses.Where(q => q.ID == studentCourse.CourseID).FirstOrDefault();
+                studentCourse.ExtraHours += cost / coure.ExtraPracticalCost;
+            }*/
 
             try {
                 context.payments.Add(p);

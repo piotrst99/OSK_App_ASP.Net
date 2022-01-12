@@ -1,4 +1,5 @@
-﻿using OSK_App.Entities;
+﻿using OSK_API.Models;
+using OSK_App.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -78,7 +79,9 @@ namespace OSK_App.Models
 
         /// PRACTICAL DATA
         public List<Practical> practicals;
-        
+
+        public List<StudentCourseData> studentDataCourses;
+        ///
 
     }
 }

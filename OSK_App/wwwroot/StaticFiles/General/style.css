@@ -111,7 +111,7 @@ tr.dane {
 
 tr.dane:hover {
     background-color: rgb(128, 255, 128, 0.6);
-    transform: translateX(+30px);
+    /*transform: translateX(+30px);*/
 }
 
 .icons {
