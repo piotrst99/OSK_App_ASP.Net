@@ -16,11 +16,11 @@ namespace UnitTest_OSK_App
 
         [TestMethod]
         public void CreateLoginFromUserName_ShouldBeOk() {
-            Assert.AreEqual(LoginPasswordGenerate.CreateLogin("Piotr", "Nowak", 1), "PN0001");
-            Assert.AreEqual(LoginPasswordGenerate.CreateLogin("£ukasz", "Tort", 22), "LT0022");
-            Assert.AreEqual(LoginPasswordGenerate.CreateLogin("Filip", "£¹cki", 143), "FL0143");
-            Assert.AreEqual(LoginPasswordGenerate.CreateLogin("¯aneta", "¯arnowska", 3245), "ZZ3245");
-            Assert.AreEqual(LoginPasswordGenerate.CreateLogin("Karol", "Dynia", 45754), "KD45754");
+            Assert.AreEqual(UserLogin.CreateLogin("Piotr", "Nowak", 1), "PN0001");
+            Assert.AreEqual(UserLogin.CreateLogin("£ukasz", "Tort", 22), "LT0022");
+            Assert.AreEqual(UserLogin.CreateLogin("Filip", "£¹cki", 143), "FL0143");
+            Assert.AreEqual(UserLogin.CreateLogin("¯aneta", "¯arnowska", 3245), "ZZ3245");
+            Assert.AreEqual(UserLogin.CreateLogin("Karol", "Dynia", 45754), "KD45754");
         }
 
         [TestMethod]

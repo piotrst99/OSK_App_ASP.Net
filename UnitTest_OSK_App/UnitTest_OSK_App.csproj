@@ -17,8 +17,4 @@
     <ProjectReference Include="..\OSK_App\OSK_App.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ClassTest\" />
-  </ItemGroup>
-
 </Project>

@@ -169,8 +169,8 @@ namespace OSK_App.Controllers
                     var getUserID = context.users.Count();
                     getUserID += 1;
 
-                    s.User.UserName = LoginPasswordGenerate.CreateLogin(s.User.FirstName, s.User.Surname, getUserID);
-                    s.User.Password = LoginPasswordGenerate.CreatePassword();
+                    s.User.UserName = UserLogin.CreateLogin(s.User.FirstName, s.User.Surname, getUserID);
+                    s.User.Password = UserLogin.CreatePassword();
 
                     context.students.Add(s);
                     context.SaveChanges();

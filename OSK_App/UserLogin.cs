@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace OSK_App
 {
-    public class LoginPasswordGenerate
+    public class UserLogin
     {
         public static string CreateLogin(string FirstName, string Surname, int userID) {
             string userName = "";
