@@ -173,38 +173,40 @@
             <div id="coursePage" style="max-height: 500px; display: none;">
                 <div>
                     <table id="courseDetailTable" class="table table-light">
-                        <tr>
-                            <th>Nazwa kursu</th>
-                            <td id="courseName">@Model.studentCourses[0].Course.Name</td>
-                        </tr>
-                        <tr>
-                            <th>Data rozpoczęcia</th>
-                            <td id="startDate">@Model.studentCourses[0].StartDate</td>
-                        </tr>
-                        <tr>
-                            <th>Data zakończenia</th>
-                            <td id="endDate">@Model.studentCourses[0].EndDate</td>
-                        </tr>
-                        <tr>
-                            <th>Ilość zrealizowanych godzin praktycznych</th>
-                            <td id="amountPractical">4/30</td>
-                        </tr>
-                        <tr>
-                            <th>Ilość dodatkowych zajęć</th>
-                            <td id="extraHours">@Model.studentCourses[0].ExtraHours</td><!-- 2 -->
-                        </tr>
-                        <tr>
-                            <th>Egzamin teoretyczny wewnętrzny</th>
-                            <td id="theoreticalExam">Nie przystąpił</td>
-                        </tr>
-                        <tr>
-                            <th>Egzamin praktyczny wewnętrzny</th>
-                            <td id="practicalExam">Nie przystąpił</td>
-                        </tr>
-                        <tr>
-                            <th>Szkolenie z zakresu bezpieczeństwa</th>
-                            <td id="securityLesson">Nie uczestniczył</td>
-                        </tr>
+                        @if(Model.studentCourses.Count >0){ 
+                            <tr>
+                                <th>Nazwa kursu</th>
+                                <td id="courseName">@Model.studentCourses[0].Course.Name</td>
+                            </tr>
+                            <tr>
+                                <th>Data rozpoczęcia</th>
+                                <td id="startDate">@Model.studentCourses[0].StartDate</td>
+                            </tr>
+                            <tr>
+                                <th>Data zakończenia</th>
+                                <td id="endDate">@Model.studentCourses[0].EndDate</td>
+                            </tr>
+                            <tr>
+                                <th>Ilość zrealizowanych godzin praktycznych</th>
+                                <td id="amountPractical">4/30</td>
+                            </tr>
+                            <tr>
+                                <th>Ilość dodatkowych zajęć</th>
+                                <td id="extraHours">@Model.studentCourses[0].ExtraHours</td><!-- 2 -->
+                            </tr>
+                            <tr>
+                                <th>Egzamin teoretyczny wewnętrzny</th>
+                                <td id="theoreticalExam">Nie przystąpił</td>
+                            </tr>
+                            <tr>
+                                <th>Egzamin praktyczny wewnętrzny</th>
+                                <td id="practicalExam">Nie przystąpił</td>
+                            </tr>
+                            <tr>
+                                <th>Szkolenie z zakresu bezpieczeństwa</th>
+                                <td id="securityLesson">Nie uczestniczył</td>
+                            </tr>
+                        }
                     </table>
                 </div>
                 <div>

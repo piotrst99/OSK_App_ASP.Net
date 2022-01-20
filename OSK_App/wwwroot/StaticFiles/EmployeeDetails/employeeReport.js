@@ -7,39 +7,46 @@ const reportData = document.getElementById('reportData');
 // https://parall.ax/products/jspdf
 
 selectRangeDates.addEventListener('click', () => {
-    /*var doc = new jsPDF({
-        orientation: 'p',
-        format: 'a4',
-        unit:'mm',
-        putOnlyUsedFonts: true
-    });*/
-
     $.ajax({
         type: 'POST',
         dataType: 'JSON',
         url: '/Pracownik/GetEmployeeDataToReport',
-        data: { id: $('#employeeID').val(), beginDate: beginDateSelect.value, endDate: endDateSelect.value },
+        data: { employeeID: $('#employeeID').val(), beginDate: beginDateSelect.value, endDate: endDateSelect.value },
         success: function (data) {
-
-            console.log(data.result);
             refreshPracticalDetailsForReport(beginDateSelect.value, endDateSelect.value);
 
             let doc = new jsPDF();
             let date = new Date();
             let dateStr = date.getFullYear() + "-" + sprNumberData(date.getMonth() + 1) + "-" + sprNumberData(date.getDate()) + " " +
                 sprNumberData(date.getHours()) + ":" + sprNumberData(date.getMinutes()) + ":" + sprNumberData(date.getSeconds());
+            let employeeName = $('#employeePersonal').find('tr > td')[0].textContent + " " + $('#employeePersonal').find('tr > td')[2].textContent;
 
             doc.setFontSize(30); doc.text(10, 20, 'Raport pracownika');
-            doc.setFontSize(20); doc.text(10, 35, $('#employeePersonal').find('tr > td')[0].textContent + " " + $('#employeePersonal').find('tr > td')[2].textContent );
+            doc.setFontSize(20); doc.text(10, 35, employeeName);
             doc.setFontSize(15); doc.text(10, 45, "Od " + beginDateSelect.value + " do " + endDateSelect.value);
             doc.setFontSize(20); doc.text(10, 65, 'Informacje o jazdach');
-            doc.setFontSize(12); doc.text(10, 75, 'Liczba zrealizowanych jazd: ' + data.result[0]);
-            doc.setFontSize(12); doc.text(10, 85, 'Liczba anulowanych jazd: ' + data.result[1]);
+            doc.setFontSize(12); doc.text(10, 75, 'Liczba zrealizowanych jazd: ' + data.countOfRealized);
+            doc.setFontSize(12); doc.text(10, 85, 'Liczba anulowanych jazd: ' + data.countOfCancel);
             doc.setFontSize(10); doc.text(10, 280, 'OSK App - Wydrukowano przez: ' + $('#userName').text() + " - " + dateStr );
 
-            doc.save('Raport-' + $('#employeePersonal').find('tr > td')[0].textContent + " " + $('#employeePersonal').find('tr > td')[2].textContent +'.pdf');
+            doc.save('Raport-' + employeeName +'.pdf');
+        }
+    });
+});
 
-            /*$.ajax({
+function sprNumberData(val) {
+    if (val < 10) { return "0" + val; }
+    else { return val; }
+}
+
+/*var doc = new jsPDF({
+    orientation: 'p',
+    format: 'a4',
+    unit:'mm',
+    putOnlyUsedFonts: true
+});*/
+
+/*$.ajax({
                 url: "/StaticFiles/EmployeeDetails/EmployeeWorkReport.html",
                 type: 'GET',
                 success: function (response) {
@@ -73,14 +80,3 @@ selectRangeDates.addEventListener('click', () => {
 
                 }
             });*/
-
-
-        }
-    });
-
-});
-
-function sprNumberData(val) {
-    if (val < 10) { return "0" + val; }
-    else { return val; }
-}

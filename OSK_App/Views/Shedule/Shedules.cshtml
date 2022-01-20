@@ -1,102 +1,160 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-@{
+﻿@{
     ViewData["Title"] = "Zajęcia";
     Layout = "~/Views/Shared/_PanelLayout.cshtml";
 }
 
+<link href="~/StaticFiles/Schedule/scheduleStyle.css" rel="stylesheet" />
+
+
+<div style="margin-bottom: 10px;">
+    <button style="background-color: #65078a; margin-right: 10px;" type="button" class="btn btn-secondary" asp-controller="Shedule" asp-action="TheoreticalShedules">Teoria</button>
+    <button style="background-color: #65078a;" type="button" class="btn btn-secondary" asp-controller="Shedule" asp-action="Shedules">Jazdy</button>
+</div>
+
 <div id="zajTeoretyczne" style="display: none;">
     <h5>Zajęcia teoretyczne</h5>
-
 </div>
 
 <div id="zajPraktyczne">
-    <h5>Zajęcia praktyczne</h5>
+    <div style="float: left; width: 100%; background-color: #65078a; color: white; font-weight: bold; margin-bottom:15px;">
+        <div style="float:left; padding:3px 0 0 5px;"><h4>ZAJĘCIA PRAKTYCZNE</h4></div>
+        <!--<div style="float: right;"><a class="nav-link text-light" asp-controller="Vehicle" asp-action="AddVehicle">+ Dodaj pojazd</a></div>-->
+    </div> 
 
     <div class="card">
-        <div class="form-inline" style="align-items: center;">
-            <button class="btn btn-outline-primary col-sm-2" id="previous" onclick="previous()"><-</button>
-            <h3 class="card-header col-sm-8" style="text-align:center;" id="monthAndYear"></h3>
-            <button class="btn btn-outline-primary col-sm-2" id="next" onclick="next()">-></button>
-            <input id="selectCallendar" class="form-control" style="float:left;" type="date" min="2020-01-01" />
+        <div class="form-inline card-header" style="align-items: center;">
+            <div class="col-sm-2">
+                <button class="btn btn-outline-primary " id="previous" onclick="previous()"><i style="font-size:12px;" class="icon-left-open"></i></button>
+                <button class="btn btn-outline-primary " id="previous" onclick="now()"><i style="font-size:12px;" class="icon-record"></i></button>
+                <button class="btn btn-outline-primary " id="next" onclick="next()"><i style="font-size:12px;" class="icon-right-open"></i></button>
+            </div>
+            <h3 class=" col-sm-8" style="text-align:center;" id="monthAndYear"></h3>
+            <input id="selectCallendar" class="form-control col-sm-2" type="date" min="2020-01-01" />
         </div>
 
-        <table class="table table-bordered table-responsive-sm" id="calendar">
-            <thead id="dayOfWeek">
-                <tr>
-                    <th>Nie</th>
-                    <th>Pon</th>
-                    <th>Wto</th>
-                    <th>Śro</th>
-                    <th>Czw</th>
-                    <th>Pi</th>
-                    <th>Sob</th>
+        <div id="practicalTableOfDay" style="overflow: auto;"></div>
+        <div id="practicalOnDay" style="overflow: auto;"></div>
+
+    </div>
+
+    <!-- PRACTICAL FOR CANCEL -->
+
+    <div class="row breadcrumb" style="margin: 20px 0 0 0">
+        <div style="float: left; margin-right:auto;">
+            Zajęcia do odwołania
+        </div>
+        <div style="float: right; margin-left: auto;">
+            <button id="showPracticalCancelBtn" type="button" class="btn btn-primary btn-sm" style="display: block; float: left; margin-left:5px;">Pokaż</button>
+            <button id="hiddenPracticalCancelBtn" type="button" class="btn btn-primary btn-sm" style="display: none; float: left; margin-left: 5px; ">Ukryj</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div id="practicalCancel" class="row breadcrumb" style="display: none; margin: 20px 0 0 0;">
+        <div>
+            <table class="table table-light" id="cancelPracticalTable">
+                <tr class="trHeader" id="cancelPracHeader">
+                    <th>Nr</th>
+                    <th>Data</th>
+                    <th>Godzina</th> 
+                    <th>Kursant</th>
+                    <th>Instruktor</th>
+                    <th>Kategoria</th>
+                    <th>Akceptuj / Odrzuć</th>
                 </tr>
-            </thead>
-
-            <tbody id="calendar-body">
-            </tbody>
-
-
-        </table>
-        <div id="test123"></div>
-
-
-        <br />
-        <!--<form class="form-inline">-->
-
-        <div class="form-inline">
-            <label class="lead mr-2 ml-2" for="month">Idź do: </label>
-            <select class="form-control" name="month" id="month" onchange="jump()">
-                <option value=0>Styczeń</option>
-                <option value=1>Luty</option>
-                <option value=2>Marzec</option>
-                <option value=3>Kwiecień</option>
-                <option value=4>Maj</option>
-                <option value=5>Czerwiec</option>
-                <option value=6>Lipiec</option>
-                <option value=7>Sierpień</option>
-                <option value=8>Wrzesień</option>
-                <option value=9>Październik</option>
-                <option value=10>Listopad</option>
-                <option value=11>Grudzień</option>
-            </select>
-
-
-            <label for="year"></label><select class="form-control" name="year" id="year" onchange="jump()">
-                <option value=2020>2020</option>
-                <option value=2021>2021</option>
-                <option value=2022>2022</option>
-                <option value=2023>2023</option>
-                <option value=2024>2024</option>
-                <option value=2025>2025</option>
-                <option value=2026>2026</option>
-                <option value=2027>2027</option>
-                <option value=2028>2028</option>
-                <option value=2029>2029</option>
-                <option value=2030>2030</option>
-                <option value=2031>2031</option>
-                <option value=2032>2032</option>
-                <option value=2033>2033</option>
-                <option value=2034>2034</option>
-                <option value=2035>2035</option>
-                <option value=2036>2036</option>
-                <option value=2037>2037</option>
-                <option value=2038>2038</option>
-                <option value=2039>2039</option>
-                <option value=2040>2040</option>
-            </select>
+            </table>
         </div>
-
     </div>
 
-    <div>
-        <div id="szczegolyZaj"></div>
+    <!-- ADD PRACTICAL MODAL -->
+
+    <div id="addPracticalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj jazdę</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <table id="practicalDataTable" class="table table-light">
+                        <tr>
+                            <th>Data</th>
+                            <td id="plannedDate"></td>
+                        </tr>
+                        <tr>
+                            <th>Godz. rozp.</th>
+                            <td id="plannedStartTime"></td>
+                        </tr>
+                        <tr>
+                            <th>Kursant</th>
+                            <td id="planedStudent"><select class="form-control col-sm-10" id="studentSelect" name="kursantTxt"></select></td>
+                        </tr>
+                        <tr>
+                            <th>Instruktor</th>
+                            <td id="planedEmployee"><select class="form-control col-sm-10" id="employeeSelect" name="instruktorTxt"></select></td>
+                        </tr>
+                    </table>
+                    <button id="addPracticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Zapisz</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <!-- DETAIL PRACTICAL MODAL -->
+
+    <div id="practicalDataModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Szczegóły zajęć praktycznych</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <span id="PracticID" hidden></span>
+                    <table id="practicalDataTable" class="table table-light">
+                        <tr>
+                            <th>Data</th>
+                            <td id="date"></td>
+                        </tr>
+                        <tr>
+                            <th>Godz. rozp.</th>
+                            <td id="startTime"></td>
+                        </tr>
+                        <tr>
+                            <th>Godz. zak.</th>
+                            <td id="endTime"><input type="time" /></td>
+                        </tr>
+                        <tr>
+                            <th>Kursant</th>
+                            <td id="student"></td>
+                        </tr>
+                        <tr>
+                            <th>Instruktor</th>
+                            <td id="employee"></td>
+                        </tr>
+                        <tr>
+                            <th>Przebieg [km]</th>
+                            <td id="course"><input class="form-control col-sm-3" type="number" min="0" /></td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <select id="practicalStatus" class="form-control col-sm-4">
+                                    <option value="1">Zaplanowany</option>
+                                    <option value="2">Zrealizowany</option>
+                                    <option value="3">Odwołane</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <button id="savePracticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Edytuj</button>
+                    <button id="removePracticalDataBtn" type="button" class="btn btn-danger" style="margin-bottom: 10px;">Usuń</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="~/Scripts/jquery-3.6.0.js"></script>
 
@@ -105,9 +163,9 @@
             cursor: pointer;
         }
 
-            #calendar td:hover {
-                background-color: #CCC;
-            }
+        #calendar td:hover {
+            background-color: #CCC;
+        }
 
         #test123 table {
             margin: 20px;
@@ -154,11 +212,9 @@
         }
     </style>
 
-    <script src="~/StaticFiles/calendar3.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
             integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
             crossorigin="anonymous"></script>-->
@@ -166,8 +222,8 @@
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
 
-    <script src="~/StaticFiles/test.js"></script>
-
 </div>
 
-<!--<script src="~/StaticFiles/Schedule/schedule.js"></script>-->
+<script src="~/StaticFiles/Schedule/cancelPractical.js"></script>
+<script src="~/StaticFiles/Schedule/schedule.js"></script>
+

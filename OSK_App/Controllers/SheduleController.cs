@@ -17,7 +17,7 @@ namespace OSK_App.Controllers
         public SheduleController(ApplicationContext context) {
             this.context = context;
         }
-
+        
         [Route("Zajecia")]
         public IActionResult Shedules() {
             if (HttpContext.Session.GetInt32("_Id") != null) {
@@ -28,32 +28,27 @@ namespace OSK_App.Controllers
                 return RedirectToAction("Login", "Home");
             }
         }
-        
-        [Route("Zajecia2")]
-        public IActionResult Shedules2() {
+
+        [Route("ZajeciaTeoretyczne")]
+        public IActionResult TheoreticalShedules() {
             if (HttpContext.Session.GetInt32("_Id") != null) {
                 TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
-                return View();
+
+                var theoretical = context.theoreticals.ToList();
+
+                foreach (var t in theoretical) {
+                    var employee = context.employees.Where(q => q.UserID == t.EmployeeID).FirstOrDefault();
+                    var employeeUser = context.users.Where(q => q.ID == employee.UserID).FirstOrDefault();
+                }
+
+                return View(theoretical);
             }
             else {
                 return RedirectToAction("Login", "Home");
             }
         }
 
-        [Route("ZajeciaPraktyczne")]
-        public IActionResult GetPratcicsShedule() {
-            if (HttpContext.Session.GetInt32("_Id") != null) {
-                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
-                return View("PracticsShedule");
-            }
-            else {
-                return RedirectToAction("Login", "Home");
-            }
-        }
-
-        /////////
-        /////////
-        /////////
+        ///////////////////////////
 
         [Route("GetZajeciaPraktyczne4")]
         public IActionResult GetZajeciaPraktyczne4(string wybranaData) {
@@ -104,7 +99,6 @@ namespace OSK_App.Controllers
         [Route("GetOsobyZajeciaPraktyczne")]
         public IActionResult GetOsobyZajeciaPraktyczne() {
             List<Student> kursanci = context.students.ToList<Student>();
-            //List<Student> kursanci = context.students.ToList<Student>();
             List<Employee> instruktorzy = context.employees.Where(q=>q.RoleID == 2).ToList<Employee>();
             List<User> osoba = new List<User>();
 
@@ -162,8 +156,6 @@ namespace OSK_App.Controllers
 
         [Route("setZeciaPraktyczne")]
         public IActionResult setZeciaPraktyczne(string data, int kursantID, int instruktorID, string godzStart) {
-            //var id = context.practicals.Max(q => q.Id);
-            //id += 1;
 
             var studentCourseID = context.studentCourses.Where(q => q.StudentID == kursantID).Select(q => q.CourseID).FirstOrDefault();
             var course = context.courses.Where(q => q.ID == studentCourseID).FirstOrDefault();
@@ -193,7 +185,6 @@ namespace OSK_App.Controllers
             }
             
             return Json(new { czyDodano = true });
-            //return Json(new { czyDodano = "" });
 
         }
 

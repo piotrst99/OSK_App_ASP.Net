@@ -5,6 +5,7 @@ using OSK_App.Entities;
 using OSK_App.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -263,16 +264,18 @@ namespace OSK_App.Controllers
         }
 
         [Route("GetEmployeeDataToReport")]
-        public IActionResult GetEmployeeDataToReport(int employeeID) {
+        public IActionResult GetEmployeeDataToReport(int employeeID, string beginDate, string endDate) {
 
-            List<int> dane = new List<int>();
-            
-            var listOfPractical = context.practicals.Where(q => q.EmployeeID == employeeID).ToList();
+            var listOfPractical = context.practicals.Where(q => q.EmployeeID == employeeID).ToList().Where(q=>
+                (DateTime.ParseExact(beginDate, "yyyy-MM-dd", CultureInfo.InvariantCulture) <= 
+                DateTime.ParseExact(q.Data, "yyyy-MM-dd", CultureInfo.InvariantCulture)) &&
+                        (DateTime.ParseExact(endDate, "yyyy-MM-dd", CultureInfo.InvariantCulture) >= 
+                        DateTime.ParseExact(q.Data, "yyyy-MM-dd", CultureInfo.InvariantCulture))).ToList();
 
-            dane.Add(listOfPractical.Where(q => q.PracticalStatID == 2).Count());
-            dane.Add(listOfPractical.Where(q => q.PracticalStatID == 3).Count());
-
-            return Json(new { result = dane });
+            return Json(new {
+                countOfRealized = listOfPractical.Where(q => q.PracticalStatID == 2).Count(),
+                countOfCancel = listOfPractical.Where(q => q.PracticalStatID == 3).Count()
+            });
         }
 
     }

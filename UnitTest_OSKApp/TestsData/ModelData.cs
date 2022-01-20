@@ -45,14 +45,6 @@ namespace UnitTest_OSK_App.TestsData
         public List<TypePayment> typePayments = new List<TypePayment>();
 
         public ModelData() {
-            //users.Add(new User() { ID = 1, UserName = "WC0001", Password = "12345" });
-            //users.Add(new User() { ID = 2, UserName = "KG0002", Password = "52179", Employee= new Employee() { UserID = 2, RoleID = 2, NrInstructor = "XYZ0001" } });
-            //users.Add(new User() { ID = 3, UserName = "JA0003", Password = "68764", Employee= new Employee() { UserID = 3, RoleID = 2, NrInstructor = "XYZ0022" } });
-            //users.Add(new User() { ID = 22, UserName = "PF0022", Password = "90778", Employee= new Employee() { UserID = 22, RoleID = 2, NrInstructor = "XYZ99999" } });
-            //users.Add(new User() { ID = 8, UserName = "KL0008", Password = "55656" });
-            //users.Add(new User() { ID = 9, UserName = "TK0009", Password = "57913" });
-            //users.Add(new User() { ID = 26, UserName = "AS0026", Password = "38606" });
-
             employees.Add(new Employee() { UserID = 1, RoleID = 1, NrInstructor = null, User = new User() { ID = 1, UserName = "WC0001", Password = "12345" } });
             employees.Add(new Employee() { UserID = 2, RoleID = 2, NrInstructor = "XYZ0001", User = new User { ID = 2, UserName = "KG0002", Password = "52179" } });
             employees.Add(new Employee() { UserID = 3, RoleID = 2, NrInstructor = "XYZ0022", User = new User { ID = 3, UserName = "JA0003", Password = "68764" } });
@@ -115,3 +107,12 @@ namespace UnitTest_OSK_App.TestsData
 
     }
 }
+
+
+//users.Add(new User() { ID = 1, UserName = "WC0001", Password = "12345" });
+//users.Add(new User() { ID = 2, UserName = "KG0002", Password = "52179", Employee= new Employee() { UserID = 2, RoleID = 2, NrInstructor = "XYZ0001" } });
+//users.Add(new User() { ID = 3, UserName = "JA0003", Password = "68764", Employee= new Employee() { UserID = 3, RoleID = 2, NrInstructor = "XYZ0022" } });
+//users.Add(new User() { ID = 22, UserName = "PF0022", Password = "90778", Employee= new Employee() { UserID = 22, RoleID = 2, NrInstructor = "XYZ99999" } });
+//users.Add(new User() { ID = 8, UserName = "KL0008", Password = "55656" });
+//users.Add(new User() { ID = 9, UserName = "TK0009", Password = "57913" });
+//users.Add(new User() { ID = 26, UserName = "AS0026", Password = "38606" });

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OSK_App;
 using OSK_App.Entities;
@@ -25,7 +25,7 @@ namespace UnitTest_OSK_App
 
         [TestMethod]
         public void LoginToPanel_ShouldBeOK() {
-            Assert.IsTrue(modelData.PanelLoginIsExists("WC0001","12345"));
+            Assert.IsTrue(modelData.PanelLoginIsExists("WC0001", "12345"));
         }
 
         [TestMethod]

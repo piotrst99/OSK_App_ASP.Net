@@ -108,42 +108,15 @@ function createDiv2(date) {
 
             }
 
-            $.ajax({
-                url: "/StaticFiles/harmonogram.html",
-                success: function (response) {
-                    $('#test123').html($($.parseHTML(response)).html());
-
-                    /*setData('07', 0, grupa1);
-                    setData('09', 6, grupa2);
-                    setData('11', 12, grupa3);
-                    setData('13', 18, grupa4);
-                    setData('15', 24, grupa5);*/
-
-                    setData2(tabHours[0][1], 0, grupa1);
-                    setData2(tabHours[1][1], 1, grupa2);
-                    setData2(tabHours[2][1], 2, grupa3);
-                    setData2(tabHours[3][1], 3, grupa4);
-                    setData2(tabHours[4][1], 4, grupa5);
-
-                    /*$('.addZajPrakBtn').click(loadAddZajPrak);
-
-                    if (grupa1.length >= 6) { $('#07').prop('disabled', 'disabled'); }
-                    if (grupa2.length >= 6) { $('#09').prop('disabled', 'disabled'); }
-                    if (grupa3.length >= 6) { $('#11').prop('disabled', 'disabled'); }
-                    if (grupa4.length >= 6) { $('#13').prop('disabled', 'disabled'); }
-                    if (grupa5.length >= 6) { $('#15').prop('disabled', 'disabled'); }*/
-
-                    //$('#backCalendarBtn').click(backToCalendar);
-
-                }
-            });
-
+            setDataToTable(tabHours[0][1], 0, grupa1);
+            setDataToTable(tabHours[1][1], 1, grupa2);
+            setDataToTable(tabHours[2][1], 2, grupa3);
+            setDataToTable(tabHours[3][1], 3, grupa4);
+            setDataToTable(tabHours[4][1], 4, grupa5);
 
         }
 
-
     });
-
 
 }
 
@@ -152,7 +125,7 @@ function sprNumberData(val) {
     else { return val; }
 }
 
-function setData2(nr, val, dane) {
+function setDataToTable(nr, val, dane) {
     for (var i = 0; i < 6; i++) {
 
         if (i < dane.length) {

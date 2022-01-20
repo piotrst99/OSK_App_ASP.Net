@@ -1,0 +1,92 @@
+﻿@model IEnumerable<OSK_App.Entities.Theoretical>
+
+@{
+    ViewData["Title"] = "Zajęcia";
+    Layout = "~/Views/Shared/_PanelLayout.cshtml";
+}
+
+<link href="~/StaticFiles/Schedule/scheduleStyle.css" rel="stylesheet" />
+<link href="~/StaticFiles/Schedule/theoreticalStyle.css" rel="stylesheet" />
+
+<div id="zajTeoretyczne">
+    <div style="float: left; width: 100%; background-color: #65078a; color: white; font-weight: bold; margin-bottom:20px;">
+        <div style="float:left; padding:3px 0 0 5px;"><h4>ZAJĘCIA TEORETYCZNE</h4></div>
+        <div id="addTheoretical" style="float: right; cursor:pointer;"><a class="nav-link text-light">+ Dodaj zajęcie</a></div>
+    </div>
+
+    <div style="float:left;" id="paginesBtn">
+        <div style="float:left;">
+            <button disabled id="previous" class="btn btn-sm btn-outline-primary" style="cursor:pointer; margin-right:5px;"><i class="icon-left-open"></i></button>
+            <button disabled id="next" class="btn btn-sm btn-outline-primary" style="cursor: pointer; margin-left: 5px;"><i class="icon-right-open"></i></button>
+        </div>
+        <div style="float:left; margin-left:20px;" id="numberPage">Strona 1 / 1</div>
+    </div>
+
+    <table class="table table-light tablePage" id="page1">
+        <tr class="trHeader">
+            <th>Nr</th>
+            <th>Temat</th>
+            <th>Data/Godzina</th>
+            <th>Prowadzący</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model) {
+            <tr class="dane">
+                <td>@item.ID</td>
+                <td>@item.Topic</td>
+                <td>@item.Data / @item.StartTime-@item.EndTime</td>
+                <td>@item.Employee.User.FirstName @item.Employee.User.Surname</td>
+                <td>
+                    <a class="nav-link text-dark icon" asp-controller="" asp-action="" asp-route-id="@item.ID">
+                        <i class="icon-pencil"></i>
+                    </a>
+                    <a class="nav-link text-dark icon" asp-controller="" asp-action="" asp-route-id="@item.ID">
+                        <i class="icon-trash"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+
+    <!-- ADD THEORETICAL MODAL -->
+    <div id="addTheoreticalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Dodaj zajęcie</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <table id="theoreticalDataTable" class="table table-light">
+                        <tr>
+                            <th>Data</th>
+                            <td><input class="form-control col-sm-4" type="date" id="plannedDate" /></td>
+                        </tr>
+                        <tr>
+                            <th>Godz. rozp.</th>
+                            <td><input class="form-control col-sm-3" type="time" id="plannedStartTime" /></td>
+                        </tr>
+                        <tr>
+                            <th>Godz. zak.</th>
+                            <td><input class="form-control col-sm-3" type="time" id="plannedEndTime" /></td>
+                        </tr>
+                        <tr>
+                            <th>Instruktor</th>
+                            <td id="planedEmployee"><select class="form-control col-sm-10" id="employeeSelect" name="instruktorTxt"></select></td>
+                        </tr>
+                        <tr>
+                            <th>Temat</th>
+                            <td><textarea class="form-control col-sm-10" id="topic" rows="4" cols="50"></textarea></td>
+                        </tr>
+                    </table>
+                    <button id="addTheoreticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/StaticFiles/Schedule/theoretical.js"></script>
+<!--<script src="~/StaticFiles/General/userPaginate.js"></script>-->
+
