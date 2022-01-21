@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace OSK_App.Controllers
@@ -50,10 +52,19 @@ namespace OSK_App.Controllers
         [Route("Login")]
         [ValidateAntiForgeryToken]
         public IActionResult Login(Employee e) {
-            var employee = context.employees.Where(q => q.User.UserName == e.User.UserName && q.User.Password == e.User.Password
+
+            var sha256 = new SHA256Managed();
+            byte[] password = Encoding.ASCII.GetBytes(e.User.Password);
+            byte[] hashValue = sha256.ComputeHash(password);
+
+            string pwdStr = "";
+            foreach (byte b in hashValue)
+                pwdStr += b.ToString("x2");
+
+            var employee = context.employees.Where(q => q.User.UserName == e.User.UserName && q.User.HashPassword == pwdStr
                 && q.Role.ID == 1).FirstOrDefault();
 
-            if(employee != null) {
+            if (employee != null) {
                 //TempData["UserId"] = employee.UserID;
                 HttpContext.Session.SetInt32(SessionID, employee.UserID);
                 return RedirectToAction("MainPage" ,"Panel");
