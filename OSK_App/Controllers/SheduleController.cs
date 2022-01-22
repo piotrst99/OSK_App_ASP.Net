@@ -48,6 +48,24 @@ namespace OSK_App.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("DeleteTheoretical/{id}")]
+        public IActionResult RemoveTheroretical(int id) {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                var theoretical = context.theoreticals.Where(q => q.ID == id).FirstOrDefault();
+
+                //return Content(user.FirstName + " " + user.Surname);
+                context.theoreticals.Remove(theoretical);
+                return RedirectToAction("TheoreticalShedules");
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
+
+        }
+
         ///////////////////////////
 
         [Route("GetZajeciaPraktyczne4")]

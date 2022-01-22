@@ -345,8 +345,7 @@ namespace OSK_App.Controllers
             }
         }
 
-        //[HttpDelete]
-        [HttpGet]
+        [HttpDelete]
         [Route("UsunKursanta/{id}")]
         public IActionResult RemoveStudent(int id) {
             if (HttpContext.Session.GetInt32("_Id") != null) {
@@ -355,8 +354,9 @@ namespace OSK_App.Controllers
                 var student = context.students.Where(q => q.UserID == id).FirstOrDefault();
                 var user = context.users.Where(q => q.ID == student.UserID).FirstOrDefault();
 
-                return Content(user.FirstName + " " + user.Surname);
-                //return RedirectToAction("GetStudents");
+                //return Content(user.FirstName + " " + user.Surname);
+                context.students.Remove(student);
+                return RedirectToAction("GetStudents");
             }
             else {
                 return RedirectToAction("Login", "Home");

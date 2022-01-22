@@ -146,5 +146,23 @@ namespace OSK_App.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("UsunPlatnosc/{id}")]
+        public IActionResult RemovePayment(int id) {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                var payment = context.payments.Where(q => q.ID == id).FirstOrDefault();
+
+                //return Content(user.FirstName + " " + user.Surname);
+                context.payments.Remove(payment);
+                return RedirectToAction("GetPayments");
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
+
+        }
+
     }
 }

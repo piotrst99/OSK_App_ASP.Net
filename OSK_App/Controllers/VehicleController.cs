@@ -127,8 +127,8 @@ namespace OSK_App.Controllers
             }
         }
 
-        //[HttpDelete]
-        [HttpGet]
+        [HttpDelete]
+        //[HttpGet]
         [Route("UsunPojazd/{id}")]
         public IActionResult RemoveVehicle(int id) {
 
@@ -136,7 +136,10 @@ namespace OSK_App.Controllers
                 TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
                 var vehicle = context.vehicles.Where(q => q.ID == id).FirstOrDefault();
 
-                return Content(vehicle.RegNumber + " " + vehicle.Mark + " " + vehicle.Model);
+                //return Content(vehicle.RegNumber + " " + vehicle.Mark + " " + vehicle.Model);
+                context.vehicles.Remove(vehicle);
+                context.SaveChanges();
+                return RedirectToAction("GetVehicles");
             }
             else {
                 return RedirectToAction("Login", "Home");

@@ -158,8 +158,6 @@ namespace OSK_App.Controllers
         [HttpPost]
         [Route("GetStudentParticipants")]
         public List<MemberCourse> GetStudentParticipants(int id) {
-        //public List<StudentCourse> GetStudentParticipants(int id) {
-        //public IActionResult GetStudentParticipants(int id) {
 
             List<MemberCourse> memberCourses = new List<MemberCourse>();
 
@@ -168,7 +166,6 @@ namespace OSK_App.Controllers
             foreach (var member in participants) {
 
                 try {
-                    //var student = context.students.Where(q => q.UserID == member.StudentID).FirstOrDefault();
                     var studentUser = context.users.Where(q => q.ID == member.StudentID).FirstOrDefault();
 
                     MemberCourse memberCourse = new MemberCourse() {
@@ -186,9 +183,26 @@ namespace OSK_App.Controllers
                 }
 
             }
-            //return Json(new { result = participants });
-            //return participants;
+
             return memberCourses;
+        }
+
+        [HttpDelete]
+        [Route("UsunKurs/{id}")]
+        public IActionResult RemoveCourse(int id) {
+            if (HttpContext.Session.GetInt32("_Id") != null) {
+                TempData["UserId"] = (Int32)HttpContext.Session.GetInt32("_Id");
+
+                var course = context.courses.Where(q => q.ID == id).FirstOrDefault();
+
+                //return Content(user.FirstName + " " + user.Surname);
+                context.courses.Remove(course);
+                return RedirectToAction("GetCourses");
+            }
+            else {
+                return RedirectToAction("Login", "Home");
+            }
+
         }
 
     }
