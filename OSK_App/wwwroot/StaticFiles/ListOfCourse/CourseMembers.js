@@ -7,7 +7,8 @@ window.onload = function () {
         studentParticipantsBtn[i].addEventListener('click', () => {
             studentParticipantsModal.style.display = 'block';
             var id = document.getElementsByTagName('tr')[i + 1].getElementsByTagName('td')[6].querySelector('span').textContent;
-
+            //courseName = document.getElementsByTagName('tr')[i + 1].getElementsByTagName('td')[6].querySelector('span').textContent;
+            courseName = document.getElementsByClassName('dane')[i].getElementsByTagName('td')[0].innerHTML; //getElementsByTagName('tr')[i + 1].getElementsByTagName('td')[6].querySelector('span').textContent;
             getStudentParticipants(id);
 
         });

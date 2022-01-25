@@ -8,6 +8,9 @@
 <link href="~/StaticFiles/modalStyle.css" rel="stylesheet" />
 <link href="~/StaticFiles/ListOfCourse/style.css" rel="stylesheet" />
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
 <div style="float: left; width: 100%; background-color: #033a52; color: white; font-weight: bold;">
     <div style="float:left; padding:3px 0 0 5px;"><h4>KURS - LISTA KURSÓW</h4></div>
     <div style="float: right;"><a class="nav-link text-light" asp-controller="Course" asp-action="AddCourse">+ Dodaj kurs</a></div>
@@ -54,7 +57,7 @@
             <td>@Html.DisplayFor(modelItem => item.CountOfStudents)</td>
             <td>
                 <a class="nav-link text-dark icon" asp-action="Edit" asp-route-id="@item.ID"><i class="icon-pencil"></i></a>
-                <a class="nav-link text-dark icon studentParticipantsBtn" style="cursor:pointer;"><i class="icon-group"></i></a> 
+                <a class="nav-link text-dark icon studentParticipantsBtn" style="cursor:pointer;"><i class="icon-group"></i></a>
                 <a class="nav-link text-dark icon" asp-action="Delete" asp-route-id="@item.ID"><i class="icon-trash"></i></a>
                 <span id="courseID" style="display:none">@item.ID</span>
             </td>
@@ -69,6 +72,7 @@
             <span class="close">&times;</span>
         </div>
         <div class="modal-body">
+            <button id="getStudentsBtn" type="button" class="btn btn-sm btn-primary">Pobierz listę</button>
             <div id="membersData">
                 <table id="participantsTable" class="table table-light">
                     <tr>
@@ -84,5 +88,5 @@
 </div>
 
 <script src="~/StaticFiles/ListOfCourse/CourseMembers.js"></script>
-
+<script src="~/StaticFiles/ListOfCourse/listOfStudents.js"></script>
 
