@@ -93,6 +93,12 @@
                             <th>Instruktor</th>
                             <td id="planedEmployee"><select class="form-control col-sm-10" id="employeeSelect" name="instruktorTxt"></select></td>
                         </tr>
+                        <tr>
+                            <th>Pojazd</th>
+                            <td id="planedVehicle"><select class="form-control col-sm-10" id="vehicleSelect">
+                                 <option value="0">Wybierz</option>
+                                 </select></td>
+                        </tr>
                     </table>
                     <button id="addPracticalDataBtn" type="button" class="btn btn-success" style="margin-bottom: 10px;">Zapisz</button>
                 </div>
@@ -105,7 +111,7 @@
     <div id="practicalDataModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Szczegóły zajęć praktycznych</h3>
+                <h3>Szczegóły jazdy</h3>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
@@ -130,7 +136,16 @@
                         </tr>
                         <tr>
                             <th>Instruktor</th>
+                            <td hidden id="employee222"><select class="form-control col-sm-10" id="employeeSelect2" name="instruktorTxt2">
+                                <option value="0">Adam Zdrój</option>
+                            </select></td>
                             <td id="employee"></td>
+                        </tr>
+                        <tr>
+                            <th>Pojazd</th>
+                            <td><select class="form-control col-sm-10" id="employeeSelect2" name="instruktorTxt2">
+                                    <option value="0">Wybierz</option>
+                                </select></td>
                         </tr>
                         <tr>
                             <th>Przebieg [km]</th>
